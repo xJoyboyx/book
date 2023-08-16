@@ -1,0 +1,14 @@
+{
+  "pages": {
+    "configuration": {
+      "header": "CONFIGURACIÓN",
+      "select_language": "Seleccionar idioma",
+      "select_themes": "Selecciona un tema",
+      "theme1": "Original",
+      "theme2": "Pixeles"
+    },
+    "language_selection": {
+      "select_language": "IDIOMAS"
+    }
+  }
+}
