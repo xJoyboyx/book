@@ -86,8 +86,8 @@ class AppThemes {
 
   //#region THEME 2
   //#region THEME 2 COLORS
-  static const primaryColorTheme2 = Color.fromRGBO(214, 207, 190, 1);
-  static const backgroundColorTheme2 = Color.fromRGBO(32, 30, 30, 1);
+  static const primaryColorTheme2 = Color.fromRGBO(232, 204, 127, 1.0);
+  static const backgroundColorTheme2 = Color.fromRGBO(74, 64, 64, 1.0);
   static const accentColorTheme2 = Color.fromRGBO(149, 149, 149, 1);
   static const dimensionsColorsTheme2 = [
     Color.fromRGBO(214, 207, 190, 1),
@@ -107,13 +107,13 @@ class AppThemes {
   //region THEME 1 COLOR SCHEME
   static const ColorScheme theme2ColorScheme = ColorScheme(
       brightness: Brightness.light,
-      primary: Colors.white,
+      primary: primaryColorTheme2,
       onPrimary: Colors.black54,
       secondary: Color.fromRGBO(214, 214, 214, 100),
       onSecondary: Colors.black87,
       error: Colors.redAccent,
       onError: Colors.black87,
-      background: backgroundColorTheme1,
+      background: backgroundColorTheme2,
       onBackground: Color.fromRGBO(217, 217, 217, 1),
       surface: Color.fromRGBO(149, 149, 149, 100),
       onSurface: Color.fromRGBO(190, 190, 190, 100));
@@ -133,38 +133,34 @@ class AppThemes {
   static const TextStyle headLineMedium2 =
       TextStyle(fontSize: 20, fontWeight: FontWeight.w800);
   static const TextStyle displayLarge2 = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w200,
-    letterSpacing: 10.0,
-  );
+      fontSize: 32,
+      fontWeight: FontWeight.w200,
+      letterSpacing: 10.0,
+      color: primaryColorTheme2);
   static const TextStyle displayMedium2 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    letterSpacing: 5.0,
-  );
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 5.0,
+      color: primaryColorTheme2);
   static const TextStyle titleLarge2 = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.w800,
-    color: primaryColorTheme1,
+    color: primaryColorTheme2,
   );
   static const TextStyle titleLMedium2 = TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.w800,
-    color: primaryColorTheme1,
+    color: primaryColorTheme2,
   );
   static const TextStyle bodyMedium2 = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-  );
+      fontSize: 20, fontWeight: FontWeight.w400, color: primaryColorTheme2);
   static const TextStyle bodyLarge2 = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-  );
+      fontSize: 20, fontWeight: FontWeight.w400, color: primaryColorTheme2);
 
   //#endregion
   static final ThemeData theme2 = ThemeData(
-    textTheme: textTheme1,
-    colorScheme: theme1ColorScheme,
+    textTheme: textTheme2,
+    colorScheme: theme2ColorScheme,
   );
 //#endregion
 

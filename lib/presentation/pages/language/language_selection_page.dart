@@ -22,7 +22,7 @@ class LanguageSelectionPage extends StatelessWidget {
       body: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, state) {
           return Padding(
-            padding: EdgeInsets.only(top: .2.sh),
+            padding: EdgeInsets.only(top: .1.sh),
             child: ListView.builder(
               itemCount: languages
                   .length, // Asumiendo que 'languages' es una lista de todos los idiomas disponibles
