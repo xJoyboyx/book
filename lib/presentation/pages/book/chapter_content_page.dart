@@ -1,6 +1,9 @@
 import 'package:book/data/models/book.dart';
+import 'package:book/presentation/blocs/theme/theme_bloc.dart';
+import 'package:book/presentation/widgets/media-widgets/image_builder.dart';
 import 'package:book/themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChapterContentPage extends StatelessWidget {
@@ -10,6 +13,9 @@ class ChapterContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    final themeState = themeBloc.state;
+    final themeId = themeState.themeId + 1;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -21,7 +27,10 @@ class ChapterContentPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: ChapterItem(chapter: chapter),
+        child: ChapterItem(
+          chapter: chapter,
+          themeId: themeId,
+        ),
       ),
     );
   }
@@ -29,8 +38,8 @@ class ChapterContentPage extends StatelessWidget {
 
 class ChapterItem extends StatelessWidget {
   final Chapter chapter;
-
-  ChapterItem({required this.chapter});
+  final int themeId;
+  ChapterItem({required this.chapter, required this.themeId});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +51,7 @@ class ChapterItem extends StatelessWidget {
               title: chapter.title, chapterNumber: chapter.number),
           ChapterImageWidget(
             imagePath: chapter.coverMedia,
+            themeId: themeId,
           ),
           ChapterContentWidget(content: chapter.content)
         ],
@@ -62,25 +72,44 @@ class ChapterTitleWidget extends StatelessWidget {
         textAlign: TextAlign.center,
         text: TextSpan(
           style: Theme.of(context).textTheme.titleLarge, // Estilo base
-          children: interpretText(title, chapterNumber),
+          children: interpretText(title, chapterNumber, context),
         )); // Puedes agregar más estilos o lógica aquí si lo necesitas
   }
 }
 
 class ChapterImageWidget extends StatelessWidget {
   final String? imagePath;
-  ChapterImageWidget({super.key, this.imagePath});
+  final int themeId;
+  ChapterImageWidget({super.key, this.imagePath, required this.themeId});
 
   @override
   Widget build(BuildContext context) {
     if (imagePath != null) {
-      return Padding(
-        padding: EdgeInsets.only(
-          top: .1.sh,
-          bottom: .1.sh,
-        ),
-        child: Image.asset(imagePath!, width: .8.sw),
-      );
+      try {
+        return Padding(
+          padding: EdgeInsets.only(
+            top: .1.sh,
+            bottom: .1.sh,
+          ),
+          child: ImageBuilder(
+            imageName: imagePath!,
+            themeId: themeId.toString(),
+            width: .8.sw,
+          ),
+        );
+      } catch (e) {
+        return Padding(
+          padding: EdgeInsets.only(
+            top: .1.sh,
+            bottom: .1.sh,
+          ),
+          child: ImageBuilder(
+            imageName: imagePath!,
+            themeId: themeId.toString(),
+            width: .8.sw,
+          ),
+        );
+      }
     }
     return SizedBox.shrink(); // Retorna un widget vacío si no hay imagen
   }
@@ -94,14 +123,16 @@ class ChapterContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
+        textAlign: TextAlign.justify,
         text: TextSpan(
-      style: Theme.of(context).textTheme.bodyMedium, // Estilo base
-      children: interpretText(content, 0.1),
-    )); // Puedes agregar más estilos o lógica aquí si lo necesitas
+          style: Theme.of(context).textTheme.bodyMedium, // Estilo base
+          children: interpretText(content, 0.1, context),
+        )); // Puedes agregar más estilos o lógica aquí si lo necesitas
   }
 }
 
-List<InlineSpan> interpretText(String text, double number) {
+List<InlineSpan> interpretText(
+    String text, double number, BuildContext context) {
   final spans = <InlineSpan>[];
 
   final regex =
@@ -113,24 +144,25 @@ List<InlineSpan> interpretText(String text, double number) {
       var text = match.group(2);
       switch (match.group(1)) {
         case 'tl1':
-          style = AppThemes.textTheme1.titleLarge!.copyWith(
+          style = Theme.of(context).textTheme.titleLarge!.copyWith(
               color: AppThemes.dimensionsColorsTheme1[number.toInt()]);
           text = text!.toUpperCase();
           break;
         case 'tl2':
-          style = AppThemes.textTheme1.titleLarge!
+          style = Theme.of(context)
+              .textTheme
+              .titleLarge!
               .copyWith(color: AppThemes.accentColorTheme1);
           text = text!.toUpperCase();
           break;
         case 'hm1':
-          style = AppThemes.textTheme1.headlineMedium;
+          style = Theme.of(context).textTheme.headlineMedium;
           break;
       }
       spans.add(TextSpan(text: text, style: style));
       return '';
     },
     onNonMatch: (nonMatch) {
-      print('🌩🌩🌩 ️no match ');
       spans.add(TextSpan(text: nonMatch));
       return '';
     },

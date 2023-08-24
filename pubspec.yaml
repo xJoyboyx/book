@@ -67,7 +67,8 @@ flutter:
     - assets/books/
     - assets/media/
     - assets/copys/
-
+    - assets/media/theme1/
+    - assets/media/theme2/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -83,6 +84,9 @@ flutter:
      - family: Inter
        fonts:
          - asset: assets/fonts/Inter.ttf
+     - family: Handjet
+       fonts:
+         - asset: assets/fonts/Handjet.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

@@ -1,6 +1,7 @@
 import 'package:book/presentation/blocs/language/language_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc.dart';
 import 'package:book/presentation/pages/language/language_selection_page.dart';
+import 'package:book/presentation/widgets/media-widgets/image_builder.dart';
 import 'package:book/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,13 +10,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Acceder al estado de LanguageBloc para obtener las traducciones
     final languageState = context.watch<LanguageBloc>().state;
     final translations = languageState is LanguageSelectedState
         ? languageState.translations
         : null;
 
-    // Acceder al estado de ThemeBloc para obtener el tema actual
     final themeState = context.watch<ThemeBloc>().state;
 
     return Scaffold(
@@ -91,9 +90,11 @@ class SettingsPage extends StatelessWidget {
                               },
                               child: Column(
                                 children: [
-                                  Image.asset(
-                                      'assets/media/theme${index + 1}.gif',
-                                      width: 1.sw),
+                                  ImageBuilder(
+                                    imageName: 'theme',
+                                    themeId: (index + 1).toString(),
+                                    width: 1.sw,
+                                  ),
                                   SizedBox(height: .01.sh),
                                   Text(
                                     translations!

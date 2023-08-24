@@ -30,71 +30,64 @@ void main() async {
       LanguageRepositoryImpl(localDataSource: localDataSource);
   final setSelectedTheme = SetSelectedTheme(sharedPreferences);
   final getSelectedTheme = GetSelectedTheme(sharedPreferences);
+
+  final languageBloc = LanguageBloc(repository: repository)..add(AppStarted());
+  final themeBloc = ThemeBloc(
+      setSelectedTheme: setSelectedTheme, getSelectedTheme: getSelectedTheme)
+    ..add(LoadThemeEvent());
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LanguageBloc(repository: repository)),
-        BlocProvider(
-            create: (context) => ThemeBloc(
-                setSelectedTheme: setSelectedTheme,
-                getSelectedTheme: getSelectedTheme)),
+        BlocProvider<LanguageBloc>.value(value: languageBloc),
+        BlocProvider<ThemeBloc>.value(value: themeBloc),
       ],
-      child: MyApp(
-        languageRepository: repository,
-      ),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final LanguageRepositoryImpl languageRepository;
-  final BookRepository bookRepository;
-
-  MyApp({required this.languageRepository})
-      : bookRepository =
-            BookRepositoryImpl(localDataSource: BookLocalDataSource());
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => LanguageBloc(repository: languageRepository),
-        child: ScreenUtilInit(
-            designSize: const Size(360, 690),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (context, child) {
-              return BlocBuilder<ThemeBloc, ThemeState>(
-                builder: (context, themeState) {
-                  return MaterialApp(
-                    title: 'Book App',
-                    theme: themeState.themeData,
-                    home: BlocBuilder<LanguageBloc, LanguageState>(
-                      builder: (context, state) {
-                        if (state is LanguageSelectedState) {
-                          return FutureBuilder<Book>(
-                            future: bookRepository
-                                .loadBookBasedOnLanguage(state.language.code),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                if (snapshot.hasError) {
-                                  return Container(); // Puedes crear una página de error o mostrar un widget de error aquí.
-                                }
-                                if (snapshot.hasData && snapshot.data != null) {
-                                  return BookHomePage(book: snapshot.data!);
-                                }
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          );
-                        }
-                        return LanguageSelectionPage();
-                      },
-                    ),
-                  );
-                },
+    return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, themeState) {
+              return MaterialApp(
+                title: 'Book App',
+                theme: themeState.themeData,
+                home: BlocBuilder<LanguageBloc, LanguageState>(
+                  builder: (context, state) {
+                    if (state is LanguageSelectedState) {
+                      final bookRepository = BookRepositoryImpl(
+                          localDataSource: BookLocalDataSource());
+                      return FutureBuilder<Book>(
+                        future: bookRepository
+                            .loadBookBasedOnLanguage(state.language.code),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return Container(); // Puedes crear una página de error o mostrar un widget de error aquí.
+                            }
+                            if (snapshot.hasData && snapshot.data != null) {
+                              return BookHomePage(book: snapshot.data!);
+                            }
+                          }
+                          return CircularProgressIndicator();
+                        },
+                      );
+                    }
+                    return LanguageSelectionPage();
+                  },
+                ),
               );
-            }));
+            },
+          );
+        });
   }
 }
 
