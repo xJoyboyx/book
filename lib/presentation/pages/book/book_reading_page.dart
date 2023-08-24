@@ -1,6 +1,7 @@
 import 'package:book/data/models/book.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc.dart';
 import 'package:book/presentation/pages/book/chapter_content_page.dart';
+import 'package:book/presentation/widgets/media-widgets/image_builder.dart';
 import 'package:book/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,27 +77,9 @@ class ChapterImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (number != null) {
-      if (number == 0.1) {
-        return Container(
-          color: AppThemes.dimensionsColorsTheme1[0],
-          height: 50,
-          width: 50,
-        );
-      } else {
-        return Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppThemes.dimensionsColorsTheme1[number!.toInt()],
-            ));
-      }
-    }
-
     if (imagePath != null) {
-      return Image.asset('assets/media/theme${themeId}/${imagePath!}',
-          width: 50);
+      return ImageBuilder(
+          imageName: imagePath!, themeId: themeId.toString(), width: 40.0);
     }
     return SizedBox.shrink(); // Retorna un widget vacío si no hay imagen
   }
