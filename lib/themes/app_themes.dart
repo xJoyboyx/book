@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class AppThemes {
-  static const themeIds = ['original', 'pixeles'];
+  static const themeIds = ['original', 'theme2_pixels'];
 
   //#region THEME 1
   //#region THEME 1 COLORS
@@ -143,7 +143,7 @@ class AppThemes {
   //#endregion
   //#region THEME 1 TEXT_STYLES
   static const TextStyle headLineMedium2 = TextStyle(
-    fontSize: 20,
+    fontSize: 24,
     fontVariations: [FontVariation('wght', 800)],
     fontFamily: 'Handjet',
     color: primaryColorTheme2,
@@ -173,13 +173,13 @@ class AppThemes {
       color: primaryColorTheme2,
       fontFamily: 'Handjet');
   static const TextStyle bodyMedium2 = TextStyle(
-      fontSize: 20,
+      fontSize: 24,
       fontVariations: [FontVariation('wght', 400)],
       color: primaryColorTheme2,
       fontFamily: 'Handjet');
   static const TextStyle bodyLarge2 = TextStyle(
       fontFamily: 'Handjet',
-      fontSize: 20,
+      fontSize: 24,
       fontVariations: [FontVariation('wght', 400)],
       color: primaryColorTheme2);
 

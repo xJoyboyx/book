@@ -44,7 +44,7 @@ class ChapterItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(25.0),
+      padding: EdgeInsets.symmetric(vertical: .05.sh, horizontal: .009.sw),
       child: Column(
         children: [
           ChapterTitleWidget(
@@ -123,7 +123,7 @@ class ChapterContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-        textAlign: TextAlign.justify,
+        textAlign: TextAlign.start,
         text: TextSpan(
           style: Theme.of(context).textTheme.bodyMedium, // Estilo base
           children: interpretText(content, 0.1, context),

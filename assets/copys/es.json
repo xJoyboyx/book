@@ -5,7 +5,10 @@
       "select_language": "Seleccionar idioma",
       "select_themes": "Selecciona un tema",
       "theme1": "Original",
-      "theme2": "Pixeles"
+      "theme2": "Pixeles",
+      "email-dt": "Ingresa tu correo electrónico para asociar tus compras",
+      "email-ph": "Correo electrónico",
+      "email-save": "Guardar"
     },
     "language_selection": {
       "select_language": "IDIOMAS"

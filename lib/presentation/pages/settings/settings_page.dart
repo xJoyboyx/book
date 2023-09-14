@@ -38,7 +38,6 @@ class SettingsPage extends StatelessWidget {
                       .toUpperCase(),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                trailing: Icon(Icons.language),
                 onTap: () {
                   showModalBottomSheet(
                     context: context,

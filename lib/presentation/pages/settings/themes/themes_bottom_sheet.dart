@@ -27,7 +27,6 @@ class _ThemesBottomSheetState extends State<ThemesBottomSheet> {
             .toUpperCase(),
         style: Theme.of(context).textTheme.titleMedium,
       ),
-      trailing: Icon(Icons.color_lens),
       onTap: () {
         showModalBottomSheet(
           context: context,
@@ -36,7 +35,9 @@ class _ThemesBottomSheetState extends State<ThemesBottomSheet> {
             borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
           ),
           builder: (context) {
-            return ThemeSelection(widget: widget);
+            return ThemeSelection(
+              widget: widget,
+            );
           },
         );
       },
