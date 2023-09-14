@@ -20,6 +20,7 @@ class BookHomePage extends StatelessWidget {
     final themeBloc = BlocProvider.of<ThemeBloc>(context);
     final themeState = themeBloc.state;
     final themeId = themeState.themeId + 1;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,

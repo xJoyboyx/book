@@ -15,7 +15,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   final GetSelectedTheme getSelectedTheme;
 
   ThemeBloc({required this.setSelectedTheme, required this.getSelectedTheme})
-      : super(ThemeState(themeData: AppThemes.theme1, themeId: 1)) {
+      : super(ThemeState(themeData: AppThemes.theme1, themeId: 0)) {
     on<ThemeChanged>(_onThemeChanged);
     on<LoadThemeEvent>(_onLoadTheme);
   }
@@ -35,7 +35,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       emit(ThemeState(
           themeData: AppThemes.getThemeById(themeId), themeId: themeId));
     } else {
-      emit(ThemeState(themeData: AppThemes.theme1, themeId: 1));
+      emit(ThemeState(themeData: AppThemes.theme1, themeId: 0));
     }
   }
 }

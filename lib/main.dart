@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:book/data/datasources/book_local_data_source.dart';
-import 'package:book/data/datasources/languages/language_local_datasource.dart';
 import 'package:book/data/models/book.dart';
-import 'package:book/data/models/translations.dart';
 import 'package:book/data/repositories/book_repository.dart';
-import 'package:book/data/repositories/language/language_repository_impl.dart';
-import 'package:book/domain/usecases/theme/get_theme.dart';
-import 'package:book/domain/usecases/theme/set_theme.dart';
+import 'package:book/presentation/blocs/language/language_bloc_factory.dart';
+import 'package:book/presentation/blocs/theme/theme_bloc_factory.dart';
 import 'package:book/presentation/pages/book/book_home_page.dart';
-import 'package:book/presentation/pages/book/book_reading_page.dart';
 import 'package:book/presentation/pages/language/language_selection_page.dart';
+import 'package:book/services/in_app_purchase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,23 +13,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/blocs/language/language_bloc.dart';
 import 'presentation/blocs/theme/theme_bloc.dart';
-import 'themes/app_themes.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-  final LanguageLocalDataSource localDataSource =
-      LanguageLocalDataSourceImpl(sharedPreferences: sharedPreferences);
-  final LanguageRepositoryImpl repository =
-      LanguageRepositoryImpl(localDataSource: localDataSource);
-  final setSelectedTheme = SetSelectedTheme(sharedPreferences);
-  final getSelectedTheme = GetSelectedTheme(sharedPreferences);
+  await initApp();
+}
 
-  final languageBloc = LanguageBloc(repository: repository)..add(AppStarted());
-  final themeBloc = ThemeBloc(
-      setSelectedTheme: setSelectedTheme, getSelectedTheme: getSelectedTheme)
-    ..add(LoadThemeEvent());
+Future<void> initApp() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final sharedPreferences = await SharedPreferences.getInstance();
+
+  final languageBloc = createLanguageBloc(sharedPreferences);
+  final themeBloc = createThemeBloc(sharedPreferences);
+  final iapDetails = await fetchIAPDetails();
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -89,11 +80,4 @@ class MyApp extends StatelessWidget {
           );
         });
   }
-}
-
-Future<Translations> loadTranslations(String languageCode) async {
-  String jsonString =
-      await rootBundle.loadString('assets/copys/$languageCode.json');
-  Map<String, dynamic> jsonMap = json.decode(jsonString);
-  return Translations(jsonMap);
 }
