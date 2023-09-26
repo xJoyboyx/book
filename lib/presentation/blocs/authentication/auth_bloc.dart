@@ -23,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignInWithGoogle(
       SignInWithGoogle event, Emitter<AuthState> emit) async {
     final credentials = await signInUseCase.signInWithGoogle();
+
     if (credentials.external_user_id.isNotEmpty) {
       emit(Authenticated());
     } else {

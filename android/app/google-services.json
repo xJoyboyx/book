@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "761481068514",
+    "project_id": "dimensions-spiralone",
+    "storage_bucket": "dimensions-spiralone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761481068514:android:68d32abd655c778d1cc3bb",
+        "android_client_info": {
+          "package_name": "com.spiraldimensions.spiralone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPwzZNWDCP_fLqNrHSjfeUMkDY2o0k3po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

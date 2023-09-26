@@ -27,7 +27,7 @@ class UserRepositoryImpl implements UserRepository {
 
         final String userId = googleSignInAccount.id;
         final String userEmail = googleSignInAccount.email;
-
+        print('💼userId: ${userId}');
         sharedPreferences.setString('userId', userId);
         final UserCredential userCredential =
             UserCredential(external_user_id: userId, email: userEmail);
@@ -65,9 +65,7 @@ class UserRepositoryImpl implements UserRepository {
       return userCredential;
     } catch (error) {
       print(error);
-      return UserCredential(
-          external_user_id:
-              ''); // Manejo de errores, devuelve una cadena vacía si hay un error
+      return UserCredential(external_user_id: '');
     }
   }
 

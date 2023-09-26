@@ -3,11 +3,11 @@ import 'package:book/data/datasources/book_local_data_source.dart';
 import 'package:book/data/datasources/http_client_impl.dart';
 import 'package:book/data/models/book.dart';
 import 'package:book/data/repositories/book_repository.dart';
-import 'package:book/data/repositories/user_repository.dart';
 import 'package:book/data/repositories/user_repository_impl.dart';
 import 'package:book/data/services/user_service.dart';
 import 'package:book/domain/entities/language.dart';
 import 'package:book/domain/usecases/session/signin/sign_in_usecase.dart';
+import 'package:book/firebase_options.dart';
 import 'package:book/presentation/blocs/language/language_bloc_factory.dart';
 import 'package:book/presentation/blocs/purchases_bloc/purchases_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc_factory.dart';
@@ -16,6 +16,7 @@ import 'package:book/presentation/pages/book/chapter_content_page.dart';
 import 'package:book/presentation/pages/language/language_selection_page.dart';
 import 'package:book/presentation/pages/login/login_screen.dart';
 import 'package:book/services/in_app_purchase_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +35,9 @@ void main() async {
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final languageBloc = createLanguageBloc(sharedPreferences);
   final themeBloc = createThemeBloc(sharedPreferences);
   late StreamSubscription<List<PurchaseDetails>> _subscription;

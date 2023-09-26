@@ -12,6 +12,12 @@
     },
     "language_selection": {
       "select_language": "LANGUAGES"
+    },
+    "session": {
+      "welcome": "Bienvenid@",
+      "login_apple": "Entrar con Apple",
+      "login_google": "Entrar con Google",
+      "terms_and_conditions": "Términos y condiciones"
     }
   }
 }
