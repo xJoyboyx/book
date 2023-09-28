@@ -1,3 +1,4 @@
+import 'package:book/data/models/Result.dart';
 import 'package:book/data/services/user_service.dart';
 import 'package:book/domain/entities/user_credential.dart';
 import 'package:book/domain/repositories/user_repository.dart';
@@ -27,24 +28,23 @@ class UserRepositoryImpl implements UserRepository {
 
         final String userId = googleSignInAccount.id;
         final String userEmail = googleSignInAccount.email;
-        print('💼userId: ${userId}');
-        sharedPreferences.setString('userId', userId);
-        final UserCredential userCredential =
-            UserCredential(external_user_id: userId, email: userEmail);
+        final UserCredential userCredential = UserCredential(
+            external_user_id: userId, email: userEmail, type: 'google_login');
         await userService.registerUser(userCredential);
 
         return userCredential;
       }
 
-      return UserCredential(external_user_id: '');
+      return UserCredential(external_user_id: '', type: 'google_login');
     } catch (error) {
       print(error);
-      return UserCredential(external_user_id: '');
+      return UserCredential(external_user_id: '', type: 'google_login');
     }
   }
 
   @override
   Future<UserCredential> signInWithApple() async {
+    String type = 'apple_login';
     try {
       final credential =
           await apple_sign_in.SignInWithApple.getAppleIDCredential(
@@ -54,9 +54,8 @@ class UserRepositoryImpl implements UserRepository {
       );
 
       final String userId = credential.userIdentifier!;
-      sharedPreferences.setString('user_id', userId);
-      final UserCredential userCredential =
-          UserCredential(external_user_id: userId, email: credential.email);
+      final UserCredential userCredential = UserCredential(
+          external_user_id: userId, email: credential.email, type: type);
 
       if (credential.email != null) {
         await userService.registerUser(userCredential);
@@ -65,13 +64,19 @@ class UserRepositoryImpl implements UserRepository {
       return userCredential;
     } catch (error) {
       print(error);
-      return UserCredential(external_user_id: '');
+      return UserCredential(external_user_id: '', type: type);
     }
   }
 
   @override
-  Future<bool> autoLogin() {
-    final userId = sharedPreferences.getString('user_id');
-    return Future.value(userId != null);
+  Future<bool> autoLogin() async {
+    final userId = sharedPreferences.getString('userId');
+
+    if (userId != null) {
+      Result response = await userService.getUser(userId!);
+
+      return response.isSuccess;
+    }
+    return false;
   }
 }

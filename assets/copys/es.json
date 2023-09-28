@@ -8,7 +8,8 @@
       "theme2": "Pixeles",
       "email-dt": "Ingresa tu correo electrónico para asociar tus compras",
       "email-ph": "Correo electrónico",
-      "email-save": "Guardar"
+      "email-save": "Guardar",
+      "logout": "Cerrar sesión"
     },
     "language_selection": {
       "select_language": "IDIOMAS"

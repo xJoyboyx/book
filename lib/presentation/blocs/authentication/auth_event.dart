@@ -11,3 +11,5 @@ class AutoLogin extends AuthEvent {}
 class SignInWithGoogle extends AuthEvent {}
 
 class SignInWithApple extends AuthEvent {}
+
+class SignOut extends AuthEvent {}

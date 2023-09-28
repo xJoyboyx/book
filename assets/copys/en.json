@@ -8,7 +8,8 @@
       "theme2": "Pixel's",
       "email-dt": "Add your e-mail to associate with your purchases",
       "email-ph": "E-mail",
-      "email-save": "Save"
+      "email-save": "Save",
+      "logout": "Log-out"
     },
     "language_selection": {
       "select_language": "LANGUAGES"

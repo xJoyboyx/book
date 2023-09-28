@@ -40,19 +40,19 @@ Future<void> initApp() async {
   );
   final languageBloc = createLanguageBloc(sharedPreferences);
   final themeBloc = createThemeBloc(sharedPreferences);
-  late StreamSubscription<List<PurchaseDetails>> _subscription;
-  List<PurchaseDetails> _purchases = <PurchaseDetails>[];
-  bool _purchasePending = false;
+
   final httpClient = HttpClientImpl();
-  final userService = UserService(httpClient: httpClient);
+  final userService =
+      UserService(httpClient: httpClient, sharedPreferences: sharedPreferences);
   final googleSignIn = GoogleSignIn();
 
   final userRepository = UserRepositoryImpl(
       sharedPreferences: sharedPreferences,
       googleSignIn: googleSignIn,
       userService: userService);
+
   final signInUseCase = SignInUseCase(userRepository: userRepository);
-  final authBloc = AuthBloc(signInUseCase: signInUseCase);
+  final authBloc = AuthBloc(signInUseCase: signInUseCase)..add(AutoLogin());
 
   final iapDetails = await fetchIAPDetails();
   final purchaseBloc = PurchaseBloc(iapDetails: iapDetails);
@@ -90,7 +90,8 @@ class MyApp extends StatelessWidget {
                           localDataSource: BookLocalDataSource());
                       return BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, authState) {
-                          if (authState == Authenticated) {
+                          print('AuthState: ${authState}');
+                          if (authState == Authenticated()) {
                             return BookBuilder(
                               bookRepository: bookRepository,
                               language: state.language,
@@ -130,7 +131,6 @@ class BookBuilder extends StatelessWidget {
             return Container(); // Puedes crear una página de error o mostrar un widget de error aquí.
           }
           if (snapshot.hasData && snapshot.data != null) {
-            _checkEmail(context);
             return BookHomePage(book: snapshot.data!);
           }
         }
@@ -138,67 +138,4 @@ class BookBuilder extends StatelessWidget {
       },
     );
   }
-}
-
-Future<void> _checkEmail(context) async {
-  final prefs = await SharedPreferences.getInstance();
-  final email = prefs.getString('user_email');
-
-  if (email == null || email.isEmpty) {
-    _showEmailDialog(context);
-  }
-}
-
-Future<void> _showEmailDialog(context) async {
-  final TextEditingController emailController = TextEditingController();
-  final languageState = context.watch<LanguageBloc>().state;
-  final translations = languageState is LanguageSelectedState
-      ? languageState.translations
-      : null;
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: RichText(
-            textAlign: TextAlign.start,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium, // Estilo base
-              children: interpretText(
-                  translations!.getCopy('configuration', 'email-dt'),
-                  0.1,
-                  context),
-            )),
-        content: TextFormField(
-          controller: emailController,
-          decoration: InputDecoration(
-            labelText: translations.getCopy('configuration', 'email-ph'),
-          ),
-          keyboardType: TextInputType.emailAddress,
-        ),
-        actions: [
-          TextButton(
-            child: RichText(
-                textAlign: TextAlign.start,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium, // Estilo base
-                  children: interpretText(
-                      translations.getCopy('configuration', 'email-save'),
-                      0.1,
-                      context),
-                )),
-            onPressed: () async {
-              final email = emailController.text;
-              if (email.isNotEmpty) {
-                final prefs = await SharedPreferences.getInstance();
-                prefs.setString('user_email', email);
-                Navigator.of(context).pop();
-              } else {
-                // Puedes mostrar un mensaje de error o hacer algo más aquí.
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

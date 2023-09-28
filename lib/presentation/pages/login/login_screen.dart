@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:book/data/models/translations.dart';
 import 'package:book/presentation/blocs/authentication/auth_bloc.dart';
 import 'package:book/presentation/blocs/language/language_bloc.dart';
@@ -43,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                 Spacer(),
                 GoogleLoginBtn(translations: translations),
                 SizedBox(height: .01.sh),
-                AppleLoginBttn(translations: translations),
+                if (Platform.isIOS) AppleLoginBttn(translations: translations),
                 SizedBox(height: .1.sh),
                 TermsAndConditionButton(translations: translations),
               ],

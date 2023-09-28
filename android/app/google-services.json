@@ -12,7 +12,12 @@
           "package_name": "com.spiraldimensions.spiralone"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "761481068514-sfd3lm7skh9qahr106m76bmn1pv31pi1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDPwzZNWDCP_fLqNrHSjfeUMkDY2o0k3po"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761481068514-sfd3lm7skh9qahr106m76bmn1pv31pi1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "761481068514-ad981dlss3e46mjvsqf93uh0hiv6tc9f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spiraldimensions.spiralone"
+              }
+            }
+          ]
         }
       }
     }
