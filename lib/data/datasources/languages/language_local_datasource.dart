@@ -13,8 +13,6 @@ class LanguageLocalDataSourceImpl implements LanguageLocalDataSource {
 
   @override
   Language? getSelectedLanguage() {
-    print('🌞🌞🌞🌞 get language');
-
     final languageCode = sharedPreferences.getString('selected_language');
     print('🌞🌞language code: ${languageCode}');
     if (languageCode != null) {

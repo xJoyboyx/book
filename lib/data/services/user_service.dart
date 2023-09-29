@@ -12,19 +12,20 @@ class UserService {
   final SharedPreferences sharedPreferences;
   UserService({required this.httpClient, required this.sharedPreferences});
 
-  Future<void> registerUser(UserCredential userCredential) async {
-    final body = {
-      'external_id': userCredential.external_user_id.toString(),
-      if (userCredential.email != null) 'email': userCredential.email,
-      'service_type': userCredential.type,
-    };
-    final response = await httpClient.post('${URL}/users/register', body);
-    print(response);
+  Future<Result<UserModel>> registerUser(UserCredential userCredential) async {
     try {
-      final user = UserModel.fromJson(jsonDecode(response.body));
+      final body = {
+        'external_id': userCredential.external_user_id.toString(),
+        if (userCredential.email != null) 'email': userCredential.email,
+        'service_type': userCredential.type,
+      };
+      final response = await httpClient.post('${URL}/users/register', body);
+      final UserModel user = await UserModel.fromRawJson(response.body);
+
       sharedPreferences.setString('userId', user.id);
+      return Result.success(user);
     } catch (e) {
-      print('La respuesta no es un Map<String, dynamic> ${e}');
+      return Result.failure('REGISTER_ERROR: ${e}');
     }
   }
 
@@ -33,7 +34,6 @@ class UserService {
       final response = await httpClient.get('${URL}/users/$userId');
       final UserModel user = UserModel.fromJson(jsonDecode(response.body));
       sharedPreferences.setString('userId', user.id);
-      print('Usuario ingresado con email: ${user.email}');
       return Result.success(user);
     } catch (e) {
       return Result.failure(e);

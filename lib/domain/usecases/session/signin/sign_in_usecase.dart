@@ -1,4 +1,5 @@
-import 'package:book/domain/entities/user_credential.dart';
+import 'package:book/data/models/Result.dart';
+import 'package:book/data/models/user_model.dart';
 import 'package:book/domain/repositories/user_repository.dart';
 
 class SignInUseCase {
@@ -6,15 +7,31 @@ class SignInUseCase {
 
   SignInUseCase({required this.userRepository});
 
-  Future<UserCredential> signInWithGoogle() {
-    return userRepository.signInWithGoogle();
+  Future<UserModel?> signInWithGoogle() async {
+    Result<UserModel> response = await userRepository.signInWithGoogle();
+    if (response.isSuccess) {
+      return response.value;
+    } else {
+      return null;
+    }
   }
 
-  Future<UserCredential> signInWithApple() {
-    return userRepository.signInWithApple();
+  Future<UserModel?> signInWithApple() async {
+    Result<UserModel> response = await userRepository.signInWithApple();
+    if (response.isSuccess) {
+      return response.value;
+    } else {
+      return null;
+    }
   }
 
-  Future<bool> autoLogin() {
-    return userRepository.autoLogin();
+  Future<UserModel?> autoLogin() async {
+    Result<UserModel> response = await userRepository.autoLogin();
+
+    if (response.isSuccess) {
+      return response.value;
+    } else {
+      return null;
+    }
   }
 }

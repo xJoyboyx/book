@@ -8,10 +8,10 @@ abstract class PurchaseState extends Equatable {
 class PurchaseInitial extends PurchaseState {}
 
 class PurchasesLoaded extends PurchaseState {
-  final List<ProductDetails> iapDetails;
+  final List<Transaction> transactions;
 
-  PurchasesLoaded({required this.iapDetails});
+  PurchasesLoaded({required this.transactions});
 
   @override
-  List<Object?> get props => [iapDetails];
+  List<Object?> get props => [transactions];
 }

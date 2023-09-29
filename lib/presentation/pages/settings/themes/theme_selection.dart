@@ -1,3 +1,4 @@
+import 'package:book/data/models/transaction.dart';
 import 'package:book/presentation/blocs/purchases_bloc/purchases_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc.dart';
 import 'package:book/presentation/pages/settings/themes/themes_bottom_sheet.dart';
@@ -30,13 +31,13 @@ class ThemeSelection extends StatelessWidget {
           final themeData = AppThemes.getThemeById(index);
           final isCurrentTheme = widget.themeState.themeData == themeData;
           ProductDetails? productDetails;
-
           bool isPurchased = false;
-          print('purchaseState = ${purchaseState}');
+
           if (purchaseState is PurchasesLoaded) {
-            for (var p in purchaseState.iapDetails) {
-              if (p.id == themeId) {
-                productDetails = p;
+            for (Transaction t in purchaseState.transactions) {
+              if (t.productId == themeId) {
+                print('💀🏦 product purchased: ${themeId}');
+                isPurchased = true;
               }
             }
           }
@@ -48,8 +49,11 @@ class ThemeSelection extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 if (isPurchased) {
+                  print('Changing to purchased theme: ${themeId}');
                   context.read<ThemeBloc>().add(ThemeChanged(themeId: index));
                 } else {
+                  print('Need to implement purhcases here...');
+
                   if (productDetails != null) {
                     print('buying...');
                     final PurchaseParam purchaseParam = PurchaseParam(

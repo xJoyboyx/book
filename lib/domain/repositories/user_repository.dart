@@ -1,7 +1,8 @@
-import 'package:book/domain/entities/user_credential.dart';
+import 'package:book/data/models/Result.dart';
+import 'package:book/data/models/user_model.dart';
 
 abstract class UserRepository {
-  Future<UserCredential> signInWithGoogle();
-  Future<UserCredential> signInWithApple();
-  Future<bool> autoLogin();
+  Future<Result<UserModel>> signInWithGoogle();
+  Future<Result<UserModel>> signInWithApple();
+  Future<Result<UserModel>> autoLogin();
 }

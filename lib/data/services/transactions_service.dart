@@ -18,11 +18,15 @@ class TransactionsService {
       String userId) async {
     try {
       final response = await httpClient.get('${URL}/transactions/user/$userId');
-      final List<Transaction> transactions = (response as List)
-          .map((json) => Transaction.fromJson(json as Map<String, dynamic>))
+      final body =
+          jsonDecode(response.body); // Decodifica el String JSON en una List
+      final List<Transaction> transactions = (body as List)
+          .map((json) =>
+              Transaction.fromJson(json)) // Mapea cada elemento de la lista
           .toList();
       return Result.success(transactions);
     } catch (e) {
+      print('❌ FAILURE_TRANSACTIONS_MAP: ${e}');
       return Result.failure(e);
     }
   }

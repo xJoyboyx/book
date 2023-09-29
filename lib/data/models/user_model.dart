@@ -1,47 +1,54 @@
+import 'dart:convert';
+
 class UserModel {
-  final String id;
-  final String? email;
-  final String externalId;
-  final String serviceType;
-  final bool? enabled;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final int? v;
+  String id;
+  String? email;
+  String? externalId;
+  String? serviceType;
+  bool? enabled;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? v;
 
   UserModel({
     required this.id,
     this.email,
-    required this.externalId,
-    required this.serviceType,
+    this.externalId,
+    this.serviceType,
     this.enabled,
     this.createdAt,
     this.updatedAt,
     this.v,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['_id'],
-      email: json['email'],
-      externalId: json['external_id'],
-      serviceType: json['service_type'],
-      enabled: json['enabled'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      v: json['__v'],
-    );
-  }
+  factory UserModel.fromRawJson(String str) =>
+      UserModel.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'email': email,
-      'external_id': externalId,
-      'service_type': serviceType,
-      'enabled': enabled,
-      'createdAt': createdAt?.toIso8601String(),
-      'updatedAt': updatedAt?.toIso8601String(),
-      '__v': v,
-    };
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        id: json["_id"],
+        email: json["email"],
+        externalId: json["external_id"],
+        serviceType: json["service_type"],
+        enabled: json["enabled"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "email": email,
+        "external_id": externalId,
+        "service_type": serviceType,
+        "enabled": enabled,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
+      };
 }

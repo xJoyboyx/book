@@ -3,16 +3,19 @@ import 'package:book/data/datasources/book_local_data_source.dart';
 import 'package:book/data/datasources/http_client_impl.dart';
 import 'package:book/data/models/book.dart';
 import 'package:book/data/repositories/book_repository.dart';
+import 'package:book/data/repositories/transaction_repository_impl.dart';
 import 'package:book/data/repositories/user_repository_impl.dart';
+import 'package:book/data/services/transactions_service.dart';
 import 'package:book/data/services/user_service.dart';
 import 'package:book/domain/entities/language.dart';
+import 'package:book/domain/repositories/transaction_repository.dart';
 import 'package:book/domain/usecases/session/signin/sign_in_usecase.dart';
+import 'package:book/domain/usecases/transactions/transactions_usecase.dart';
 import 'package:book/firebase_options.dart';
 import 'package:book/presentation/blocs/language/language_bloc_factory.dart';
 import 'package:book/presentation/blocs/purchases_bloc/purchases_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc_factory.dart';
 import 'package:book/presentation/pages/book/book_home_page.dart';
-import 'package:book/presentation/pages/book/chapter_content_page.dart';
 import 'package:book/presentation/pages/language/language_selection_page.dart';
 import 'package:book/presentation/pages/login/login_screen.dart';
 import 'package:book/services/in_app_purchase_service.dart';
@@ -22,7 +25,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/blocs/authentication/auth_bloc.dart';
 import 'presentation/blocs/language/language_bloc.dart';
@@ -54,8 +56,17 @@ Future<void> initApp() async {
   final signInUseCase = SignInUseCase(userRepository: userRepository);
   final authBloc = AuthBloc(signInUseCase: signInUseCase)..add(AutoLogin());
 
+  final TransactionsService transactionsService = TransactionsService(
+      httpClient: httpClient, sharedPreferences: sharedPreferences);
+  final TransactionRepository transactionRepository =
+      TransactionRepositoryImpl(transactionsService: transactionsService);
+  final transactionUseCase =
+      TransactionsUseCase(transactionRepository: transactionRepository);
   final iapDetails = await fetchIAPDetails();
-  final purchaseBloc = PurchaseBloc(iapDetails: iapDetails);
+  final purchaseBloc = PurchaseBloc(
+      iapDetails: iapDetails,
+      transactionsUseCase: transactionUseCase,
+      sharedPreferences: sharedPreferences);
 
   runApp(
     MultiBlocProvider(
@@ -91,7 +102,8 @@ class MyApp extends StatelessWidget {
                       return BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, authState) {
                           print('AuthState: ${authState}');
-                          if (authState == Authenticated()) {
+                          if (authState is Authenticated) {
+                            context.read<PurchaseBloc>().add(LoadPurchases());
                             return BookBuilder(
                               bookRepository: bookRepository,
                               language: state.language,

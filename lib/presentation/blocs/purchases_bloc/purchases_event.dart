@@ -5,4 +5,7 @@ abstract class PurchaseEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadPurchases extends PurchaseEvent {}
+class LoadPurchases extends PurchaseEvent {
+  @override
+  List<Object?> get props => [];
+}

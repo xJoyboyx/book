@@ -1,3 +1,4 @@
+import 'package:book/data/models/user_model.dart';
 import 'package:book/domain/usecases/session/signin/sign_in_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,8 +20,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onAutoLogin(AutoLogin event, Emitter<AuthState> emit) async {
     print('Starting Autologin');
-    final success = await signInUseCase.autoLogin();
-    emit(success ? Authenticated() : Unauthenticated());
+    final user = await signInUseCase.autoLogin();
+    emit(user != null ? Authenticated(user) : Unauthenticated());
   }
 
   Future<void> _onSignOut(SignOut event, Emitter<AuthState> emit) async {
@@ -31,22 +32,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onSignInWithGoogle(
       SignInWithGoogle event, Emitter<AuthState> emit) async {
-    final credentials = await signInUseCase.signInWithGoogle();
-
-    if (credentials.external_user_id.isNotEmpty) {
-      emit(Authenticated());
-    } else {
-      emit(Unauthenticated());
-    }
+    final UserModel? user = await signInUseCase.signInWithGoogle();
+    emit(user != null ? Authenticated(user) : Unauthenticated());
   }
 
   Future<void> _onSignInWithApple(
       SignInWithApple event, Emitter<AuthState> emit) async {
-    final credentials = await signInUseCase.signInWithApple();
-    if (credentials.external_user_id.isNotEmpty) {
-      emit(Authenticated());
-    } else {
-      emit(Unauthenticated());
-    }
+    final UserModel? user = await signInUseCase.signInWithApple();
+    emit(user != null ? Authenticated(user) : Unauthenticated());
   }
 }

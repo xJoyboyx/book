@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:book/data/models/http_client.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,7 +12,7 @@ class HttpClientImpl implements HttpClient {
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return jsonDecode(response.body);
+      return response;
     } else {
       throw Exception('Failed to post data: ${response.body}');
     }

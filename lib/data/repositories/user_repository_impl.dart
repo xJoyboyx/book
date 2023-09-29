@@ -1,4 +1,5 @@
 import 'package:book/data/models/Result.dart';
+import 'package:book/data/models/user_model.dart';
 import 'package:book/data/services/user_service.dart';
 import 'package:book/domain/entities/user_credential.dart';
 import 'package:book/domain/repositories/user_repository.dart';
@@ -17,33 +18,25 @@ class UserRepositoryImpl implements UserRepository {
       required this.userService});
 
   @override
-  Future<UserCredential> signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+  Future<Result<UserModel>> signInWithGoogle() async {
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      await googleSignInAccount.authentication;
 
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+      final String userId = googleSignInAccount.id;
+      final String userEmail = googleSignInAccount.email;
+      final UserCredential userCredential = UserCredential(
+          external_user_id: userId, email: userEmail, type: 'google_login');
 
-        final String userId = googleSignInAccount.id;
-        final String userEmail = googleSignInAccount.email;
-        final UserCredential userCredential = UserCredential(
-            external_user_id: userId, email: userEmail, type: 'google_login');
-        await userService.registerUser(userCredential);
-
-        return userCredential;
-      }
-
-      return UserCredential(external_user_id: '', type: 'google_login');
-    } catch (error) {
-      print(error);
-      return UserCredential(external_user_id: '', type: 'google_login');
+      Result<UserModel> result = await userService.registerUser(userCredential);
+      return result;
     }
+    return Result.failure('GOOGLE_SIGN_IN_ERROR');
   }
 
   @override
-  Future<UserCredential> signInWithApple() async {
+  Future<Result<UserModel>> signInWithApple() async {
     String type = 'apple_login';
     try {
       final credential =
@@ -58,25 +51,28 @@ class UserRepositoryImpl implements UserRepository {
           external_user_id: userId, email: credential.email, type: type);
 
       if (credential.email != null) {
-        await userService.registerUser(userCredential);
+        Result<UserModel> result =
+            await userService.registerUser(userCredential);
+        return result;
       }
 
-      return userCredential;
+      return Result.failure('APPLE_SIGN_IN_ERROR');
     } catch (error) {
-      print(error);
-      return UserCredential(external_user_id: '', type: type);
+      return Result.failure('APPLE_SIGN_IN_ERROR: ${error}');
     }
   }
 
   @override
-  Future<bool> autoLogin() async {
-    final userId = sharedPreferences.getString('userId');
-
-    if (userId != null) {
-      Result response = await userService.getUser(userId!);
-
-      return response.isSuccess;
+  Future<Result<UserModel>> autoLogin() async {
+    try {
+      final userId = sharedPreferences.getString('userId');
+      if (userId != null) {
+        Result<UserModel> response = await userService.getUser(userId);
+        return response;
+      }
+    } catch (e) {
+      return Result.failure('AUTO_SIGN_ERROR: ${e}');
     }
-    return false;
+    return Result.failure('AUTO_SIGN_ERROR');
   }
 }
