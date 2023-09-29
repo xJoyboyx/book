@@ -1,5 +1,6 @@
 import 'package:book/data/models/transaction.dart';
-import 'package:book/presentation/blocs/purchases_bloc/purchases_bloc.dart';
+import 'package:book/presentation/blocs/marketplace/marketplace_bloc.dart';
+import 'package:book/presentation/blocs/purchases/purchases_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc.dart';
 import 'package:book/presentation/pages/settings/themes/themes_bottom_sheet.dart';
 import 'package:book/presentation/widgets/media-widgets/image_builder.dart';
@@ -19,7 +20,7 @@ class ThemeSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purchaseState = context.watch<PurchaseBloc>().state;
+    final purchaseState = context.watch<MarketPlaceBloc>().state;
 
     return Container(
       height: 1.sh,
@@ -40,7 +41,16 @@ class ThemeSelection extends StatelessWidget {
                 isPurchased = true;
               }
             }
+            //implementar instancia de productDetails = purchaseState.productsDetails.whereId== themeId
+            try {
+              productDetails = purchaseState.productDetails
+                  .firstWhere((product) => product.id == themeId);
+              print(productDetails.id);
+            } catch (e) {
+              print('Error al buscar ProductDetails: $e');
+            }
           }
+
           if (index == 0) {
             isPurchased = true;
           }
@@ -52,16 +62,16 @@ class ThemeSelection extends StatelessWidget {
                   print('Changing to purchased theme: ${themeId}');
                   context.read<ThemeBloc>().add(ThemeChanged(themeId: index));
                 } else {
-                  print('Need to implement purhcases here...');
-
                   if (productDetails != null) {
-                    print('buying...');
                     final PurchaseParam purchaseParam = PurchaseParam(
                       productDetails: productDetails!,
                       applicationUserName: null,
                     );
                     InAppPurchase.instance
                         .buyNonConsumable(purchaseParam: purchaseParam);
+                    context
+                        .read<PurchaseBloc>()
+                        .add(StartPurchase(productDetails.currencySymbol));
                   }
                 }
               },

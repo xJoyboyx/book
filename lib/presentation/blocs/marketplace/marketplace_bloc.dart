@@ -7,15 +7,15 @@ import 'package:equatable/equatable.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'purchases_event.dart';
-part 'purchases_state.dart';
+part 'marketplace_event.dart';
+part 'marketplace_state.dart';
 
-class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
+class MarketPlaceBloc extends Bloc<PurchaseEvent, PurchaseState> {
   final TransactionsUseCase transactionsUseCase;
   final List<ProductDetails> iapDetails;
   final SharedPreferences sharedPreferences;
 
-  PurchaseBloc(
+  MarketPlaceBloc(
       {required this.iapDetails,
       required this.transactionsUseCase,
       required this.sharedPreferences})
@@ -30,9 +30,11 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
       final List<Transaction> transactions =
           await transactionsUseCase.getTransactions(user_id);
       print('🔥🔥🔥 transactions ${transactions.length}');
-      emit(PurchasesLoaded(transactions: transactions));
+      emit(PurchasesLoaded(
+          transactions: transactions, productDetails: iapDetails));
     } else {
-      emit(PurchasesLoaded(transactions: List<Transaction>.empty()));
+      emit(PurchasesLoaded(
+          transactions: List<Transaction>.empty(), productDetails: iapDetails));
     }
   }
 }

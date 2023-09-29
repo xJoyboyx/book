@@ -1,4 +1,4 @@
-part of 'purchases_bloc.dart';
+part of 'marketplace_bloc.dart';
 
 abstract class PurchaseEvent extends Equatable {
   @override

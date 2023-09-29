@@ -1,6 +1,7 @@
 import 'package:book/data/models/translations.dart';
 import 'package:book/presentation/blocs/authentication/auth_bloc.dart';
 import 'package:book/presentation/blocs/language/language_bloc.dart';
+import 'package:book/presentation/blocs/purchases/purchases_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc.dart';
 import 'package:book/presentation/pages/language/language_selection_page.dart';
 import 'package:book/presentation/pages/settings/themes/themes_bottom_sheet.dart';
@@ -18,23 +19,26 @@ class SettingsPage extends StatelessWidget {
 
     final themeState = context.watch<ThemeBloc>().state;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text(
-          translations!.getCopy('configuration', 'header'),
-          style: Theme.of(context).textTheme.displayMedium,
+    return BlocProvider(
+      create: (context) => PurchaseBloc(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          title: Text(
+            translations!.getCopy('configuration', 'header'),
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
         ),
-      ),
-      body: Container(
-        color: Theme.of(context).colorScheme.background,
-        child: Column(
-          children: [
-            SelectLanguageBtn(translations: translations),
-            SelectThemeButton(
-                translations: translations, themeState: themeState),
-            CloseSessionBtn(translations: translations)
-          ],
+        body: Container(
+          color: Theme.of(context).colorScheme.background,
+          child: Column(
+            children: [
+              SelectLanguageBtn(translations: translations),
+              SelectThemeButton(
+                  translations: translations, themeState: themeState),
+              CloseSessionBtn(translations: translations)
+            ],
+          ),
         ),
       ),
     );

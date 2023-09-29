@@ -1,4 +1,4 @@
-part of 'purchases_bloc.dart';
+part of 'marketplace_bloc.dart';
 
 abstract class PurchaseState extends Equatable {
   @override
@@ -9,9 +9,9 @@ class PurchaseInitial extends PurchaseState {}
 
 class PurchasesLoaded extends PurchaseState {
   final List<Transaction> transactions;
-
-  PurchasesLoaded({required this.transactions});
+  final List<ProductDetails> productDetails;
+  PurchasesLoaded({required this.transactions, required this.productDetails});
 
   @override
-  List<Object?> get props => [transactions];
+  List<Object?> get props => [transactions, productDetails];
 }

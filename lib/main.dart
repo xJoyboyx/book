@@ -13,7 +13,6 @@ import 'package:book/domain/usecases/session/signin/sign_in_usecase.dart';
 import 'package:book/domain/usecases/transactions/transactions_usecase.dart';
 import 'package:book/firebase_options.dart';
 import 'package:book/presentation/blocs/language/language_bloc_factory.dart';
-import 'package:book/presentation/blocs/purchases_bloc/purchases_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc_factory.dart';
 import 'package:book/presentation/pages/book/book_home_page.dart';
 import 'package:book/presentation/pages/language/language_selection_page.dart';
@@ -28,6 +27,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/blocs/authentication/auth_bloc.dart';
 import 'presentation/blocs/language/language_bloc.dart';
+import 'presentation/blocs/marketplace/marketplace_bloc.dart';
 import 'presentation/blocs/theme/theme_bloc.dart';
 
 void main() async {
@@ -63,7 +63,7 @@ Future<void> initApp() async {
   final transactionUseCase =
       TransactionsUseCase(transactionRepository: transactionRepository);
   final iapDetails = await fetchIAPDetails();
-  final purchaseBloc = PurchaseBloc(
+  final purchaseBloc = MarketPlaceBloc(
       iapDetails: iapDetails,
       transactionsUseCase: transactionUseCase,
       sharedPreferences: sharedPreferences);
@@ -74,7 +74,7 @@ Future<void> initApp() async {
         BlocProvider<LanguageBloc>.value(value: languageBloc),
         BlocProvider<ThemeBloc>.value(value: themeBloc),
         BlocProvider<AuthBloc>.value(value: authBloc),
-        BlocProvider<PurchaseBloc>.value(value: purchaseBloc),
+        BlocProvider<MarketPlaceBloc>.value(value: purchaseBloc),
       ],
       child: MyApp(),
     ),
@@ -103,7 +103,9 @@ class MyApp extends StatelessWidget {
                         builder: (context, authState) {
                           print('AuthState: ${authState}');
                           if (authState is Authenticated) {
-                            context.read<PurchaseBloc>().add(LoadPurchases());
+                            context
+                                .read<MarketPlaceBloc>()
+                                .add(LoadPurchases());
                             return BookBuilder(
                               bookRepository: bookRepository,
                               language: state.language,
