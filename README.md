@@ -1,6 +1,5 @@
-# book
-
-A new Flutter project.
+# Dimensions Book 
+A reading app made specially for Dimensions book's.
 
 ## Getting Started
 
