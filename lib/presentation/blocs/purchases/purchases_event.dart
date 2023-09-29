@@ -8,23 +8,21 @@ abstract class PurchaseEvent extends Equatable {
 }
 
 class StartPurchase extends PurchaseEvent {
-  final String
-      productId; // o cualquier otro dato necesario para iniciar la compra
+  final ProductDetails productDetails;
 
-  const StartPurchase(this.productId);
+  const StartPurchase(this.productDetails);
 
   @override
-  List<Object> get props => [productId];
+  List<Object> get props => [productDetails];
 }
 
 class CompletePurchase extends PurchaseEvent {
-  final String
-      transactionId; // o cualquier otro dato necesario para completar la compra
+  final Transaction transaction;
 
-  const CompletePurchase(this.transactionId);
+  const CompletePurchase(this.transaction);
 
   @override
-  List<Object> get props => [transactionId];
+  List<Object> get props => [transaction];
 }
 
 class ErrorPurchase extends PurchaseEvent {

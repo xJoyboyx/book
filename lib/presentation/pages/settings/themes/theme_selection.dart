@@ -37,15 +37,12 @@ class ThemeSelection extends StatelessWidget {
           if (purchaseState is PurchasesLoaded) {
             for (Transaction t in purchaseState.transactions) {
               if (t.productId == themeId) {
-                print('💀🏦 product purchased: ${themeId}');
                 isPurchased = true;
               }
             }
-            //implementar instancia de productDetails = purchaseState.productsDetails.whereId== themeId
             try {
               productDetails = purchaseState.productDetails
                   .firstWhere((product) => product.id == themeId);
-              print(productDetails.id);
             } catch (e) {
               print('Error al buscar ProductDetails: $e');
             }
@@ -62,16 +59,18 @@ class ThemeSelection extends StatelessWidget {
                   print('Changing to purchased theme: ${themeId}');
                   context.read<ThemeBloc>().add(ThemeChanged(themeId: index));
                 } else {
+                  //TODO Implement Purchase listener Actions / OnPurchaseSuccessfull / OnPurchaseError
+                  //TODO Implement restore purchases
                   if (productDetails != null) {
                     final PurchaseParam purchaseParam = PurchaseParam(
                       productDetails: productDetails!,
                       applicationUserName: null,
                     );
-                    InAppPurchase.instance
-                        .buyNonConsumable(purchaseParam: purchaseParam);
                     context
                         .read<PurchaseBloc>()
-                        .add(StartPurchase(productDetails.currencySymbol));
+                        .add(StartPurchase(productDetails));
+                    InAppPurchase.instance
+                        .buyNonConsumable(purchaseParam: purchaseParam);
                   }
                 }
               },
