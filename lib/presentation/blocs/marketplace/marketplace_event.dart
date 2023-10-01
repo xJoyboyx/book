@@ -1,11 +1,29 @@
 part of 'marketplace_bloc.dart';
 
-abstract class PurchaseEvent extends Equatable {
+abstract class MarketplaceEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class LoadPurchases extends PurchaseEvent {
+class LoadPurchases extends MarketplaceEvent {
   @override
   List<Object?> get props => [];
+}
+
+class SaveTransaction extends MarketplaceEvent {
+  final Transaction transaction;
+
+  SaveTransaction(this.transaction);
+
+  @override
+  List<Object?> get props => [transaction];
+}
+
+class StartTransaction extends MarketplaceEvent {
+  final Transaction transaction;
+
+  StartTransaction(this.transaction);
+
+  @override
+  List<Object?> get props => [transaction];
 }

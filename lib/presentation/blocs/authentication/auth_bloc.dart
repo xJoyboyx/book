@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onAutoLogin(AutoLogin event, Emitter<AuthState> emit) async {
     print('Starting Autologin');
     final user = await signInUseCase.autoLogin();
+    print(user);
     emit(user != null ? Authenticated(user) : Unauthenticated());
   }
 

@@ -7,22 +7,53 @@ abstract class PurchaseEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class StartPurchase extends PurchaseEvent {
-  final ProductDetails productDetails;
+class Initialized extends PurchaseEvent {
+  @override
+  List<Object> get props => [];
+}
 
-  const StartPurchase(this.productDetails);
+class StartPurchase extends PurchaseEvent {
+  final PurchaseDetails purchaseDetails;
+  const StartPurchase(this.purchaseDetails);
+
+  @override
+  List<Object> get props => [purchaseDetails];
+}
+
+class PurchaseInvalid extends PurchaseEvent {
+  final PurchaseDetails productDetails;
+
+  const PurchaseInvalid(this.productDetails);
+
+  @override
+  List<Object> get props => [productDetails];
+}
+
+class PurchasePending extends PurchaseEvent {
+  final PurchaseDetails productDetails;
+
+  const PurchasePending(this.productDetails);
+
+  @override
+  List<Object> get props => [productDetails];
+}
+
+class PurchaseValid extends PurchaseEvent {
+  final PurchaseDetails productDetails;
+
+  const PurchaseValid(this.productDetails);
 
   @override
   List<Object> get props => [productDetails];
 }
 
 class CompletePurchase extends PurchaseEvent {
-  final Transaction transaction;
+  final PurchaseDetails purchaseDetails;
 
-  const CompletePurchase(this.transaction);
+  const CompletePurchase(this.purchaseDetails);
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [purchaseDetails];
 }
 
 class ErrorPurchase extends PurchaseEvent {

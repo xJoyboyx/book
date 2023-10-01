@@ -32,13 +32,18 @@ class TransactionsService {
   }
 
   Future<Result<Transaction>> postTransaction(Transaction transaction) async {
+    print('transaction body: ${transaction.toRawJson()}');
     try {
       final response =
           await httpClient.post('${URL}/transactions', transaction.toJson());
       final Transaction transactionResponse =
           Transaction.fromRawJson(response.body);
+      print(response.body);
+      print(response.statusCode);
+
       return Result.success(transactionResponse);
     } catch (e) {
+      print('error on transaction post ${e}');
       return Result.failure(e);
     }
   }

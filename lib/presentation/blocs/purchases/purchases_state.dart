@@ -12,13 +12,13 @@ class PurchaseInitial extends PurchaseState {}
 class PurchaseInProgress extends PurchaseState {}
 
 class PurchaseSuccess extends PurchaseState {
-  final Transaction
-      transaction; // o cualquier otro dato relevante de la transacción exitosa
+  final PurchaseDetails
+      purchase; // o cualquier otro dato relevante de la transacción exitosa
 
-  const PurchaseSuccess(this.transaction);
+  const PurchaseSuccess(this.purchase);
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [purchase];
 }
 
 class PurchaseFailure extends PurchaseState {

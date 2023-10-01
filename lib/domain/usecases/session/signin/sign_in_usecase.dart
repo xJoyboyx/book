@@ -9,6 +9,7 @@ class SignInUseCase {
 
   Future<UserModel?> signInWithGoogle() async {
     Result<UserModel> response = await userRepository.signInWithGoogle();
+    print(response);
     if (response.isSuccess) {
       return response.value;
     } else {
@@ -27,10 +28,10 @@ class SignInUseCase {
 
   Future<UserModel?> autoLogin() async {
     Result<UserModel> response = await userRepository.autoLogin();
-
     if (response.isSuccess) {
       return response.value;
     } else {
+      print(response.error.toString());
       return null;
     }
   }

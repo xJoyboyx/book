@@ -13,6 +13,7 @@ import 'package:book/domain/usecases/session/signin/sign_in_usecase.dart';
 import 'package:book/domain/usecases/transactions/transactions_usecase.dart';
 import 'package:book/firebase_options.dart';
 import 'package:book/presentation/blocs/language/language_bloc_factory.dart';
+import 'package:book/presentation/blocs/purchases/purchases_bloc.dart';
 import 'package:book/presentation/blocs/theme/theme_bloc_factory.dart';
 import 'package:book/presentation/pages/book/book_home_page.dart';
 import 'package:book/presentation/pages/language/language_selection_page.dart';
@@ -63,7 +64,7 @@ Future<void> initApp() async {
   final transactionUseCase =
       TransactionsUseCase(transactionRepository: transactionRepository);
   final iapDetails = await fetchIAPDetails();
-  final purchaseBloc = MarketPlaceBloc(
+  final marketPlaceBloc = MarketPlaceBloc(
       iapDetails: iapDetails,
       transactionsUseCase: transactionUseCase,
       sharedPreferences: sharedPreferences);
@@ -74,7 +75,8 @@ Future<void> initApp() async {
         BlocProvider<LanguageBloc>.value(value: languageBloc),
         BlocProvider<ThemeBloc>.value(value: themeBloc),
         BlocProvider<AuthBloc>.value(value: authBloc),
-        BlocProvider<MarketPlaceBloc>.value(value: purchaseBloc),
+        BlocProvider<MarketPlaceBloc>.value(value: marketPlaceBloc),
+        BlocProvider<PurchaseBloc>.value(value: PurchaseBloc())
       ],
       child: MyApp(),
     ),
