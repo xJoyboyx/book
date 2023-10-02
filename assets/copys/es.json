@@ -6,10 +6,14 @@
       "select_themes": "Selecciona un tema",
       "theme1": "Original",
       "theme2": "Pixeles",
+      "theme1_description": "El estilo original del libro, totalmente grátis.",
+      "theme2_description": "Estilo Pixel art, creado por el autor. Te permite cambiar el estilo total del libro, cáda capítulo con una nueva portada al estilo pixel así como la tipografía.",
       "email-dt": "Ingresa tu correo electrónico para asociar tus compras",
       "email-ph": "Correo electrónico",
       "email-save": "Guardar",
-      "logout": "Cerrar sesión"
+      "logout": "Cerrar sesión",
+      "restore-purchases": "Restaurar compras"
+
     },
     "language_selection": {
       "select_language": "IDIOMAS"

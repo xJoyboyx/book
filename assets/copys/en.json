@@ -6,10 +6,14 @@
       "select_themes": "Theme selection",
       "theme1": "Original",
       "theme2": "Pixel's",
+      "theme1_description": "This is the original art sytle of the book.",
+      "theme2_description": "Pixel art style of the book. Each chapter have a particular art style and also typography is changed.",
       "email-dt": "Add your e-mail to associate with your purchases",
       "email-ph": "E-mail",
       "email-save": "Save",
-      "logout": "Log-out"
+      "logout": "Log-out",
+      "restore-purchases": "Restore purhcases"
+
     },
     "language_selection": {
       "select_language": "LANGUAGES"

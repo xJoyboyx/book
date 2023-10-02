@@ -28,7 +28,7 @@ class ThemeSelection extends StatelessWidget {
         marketPlaceStates is LoadingTransactions ||
         purchasesStates is PurchaseInProgress) {
       return Container(
-          height: .4.sh, child: Center(child: CircularProgressIndicator()));
+          height: .9.sh, child: Center(child: CircularProgressIndicator()));
     } else if (purchasesStates is PurchaseSuccess) {
       print('Purchase success state active');
 
@@ -36,11 +36,9 @@ class ThemeSelection extends StatelessWidget {
         Transaction t = marketPlaceStates.transaction;
 
         int timestamp = int.parse(purchasesStates.purchase.transactionDate!);
-        print('💼💼💼 timestamp date: ${timestamp}');
 
         DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp);
 
-        print('🐶🐶 transaction date: ${date}');
         t.date = date;
         t.description = purchasesStates.purchase.purchaseID;
         context.read<PurchaseBloc>().add(Initialized());
@@ -50,7 +48,7 @@ class ThemeSelection extends StatelessWidget {
       return CircularProgressIndicator();
     } else {
       return Container(
-        height: 1.sh,
+        height: .9.sh,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: AppThemes.themeIds.length,
@@ -79,7 +77,7 @@ class ThemeSelection extends StatelessWidget {
               isPurchased = true;
             }
             return Padding(
-              padding: EdgeInsets.only(top: .02.sh),
+              padding: EdgeInsets.only(top: .01.sh),
               child: GestureDetector(
                 onTap: () {
                   if (isPurchased) {
@@ -109,10 +107,16 @@ class ThemeSelection extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    ImageBuilder(
-                      imageName: 'theme',
-                      themeId: (index + 1).toString(),
-                      width: 1.sw,
+                    Padding(
+                      padding: EdgeInsets.only(top: .05.sh),
+                      child: Container(
+                        width: 1.sw,
+                        child: ImageBuilder(
+                          imageName: 'theme',
+                          themeId: (index + 1).toString(),
+                          width: .5.sw,
+                        ),
+                      ),
                     ),
                     SizedBox(height: .01.sh),
                     Text(
@@ -121,9 +125,49 @@ class ThemeSelection extends StatelessWidget {
                           .toUpperCase(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
+                    SizedBox(height: .01.sh),
+                    Container(
+                      width: .8.sw,
+                      child: Text(
+                        widget.translations!
+                            .getCopy('configuration',
+                                'theme${index + 1}_description')
+                            .toUpperCase(),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
                     if (!isPurchased)
                       Icon(Icons.shopping_cart,
-                          color: Theme.of(context).colorScheme.onPrimary)
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    if (index != 0 && isPurchased)
+                      Padding(
+                        padding: EdgeInsets.only(top: .05.sh),
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            InAppPurchase.instance.restorePurchases();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                AppThemes.backgroundColorTheme1),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.auto_mode,
+                            color: Colors.white,
+                            size: .05.sw,
+                          ),
+                          label: Text(
+                            widget.translations!
+                                .getCopy('configuration', 'restore-purchases')
+                                .toUpperCase(),
+                            style: AppThemes.displayMedium1,
+                          ),
+                        ),
+                      )
                   ],
                 ),
               ),

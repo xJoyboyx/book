@@ -29,6 +29,7 @@ class _ThemesBottomSheetState extends State<ThemesBottomSheet> {
       ),
       onTap: () {
         showModalBottomSheet(
+          isScrollControlled: true,
           context: context,
           backgroundColor: Theme.of(context).colorScheme.background,
           shape: const RoundedRectangleBorder(

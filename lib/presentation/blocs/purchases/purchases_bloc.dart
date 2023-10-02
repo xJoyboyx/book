@@ -28,7 +28,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
   void _onPurchaseValid(PurchaseValid event, Emitter<PurchaseState> emit) {}
   void _onPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-      print('status: ${purchaseDetails.status}');
+      print('📺📺📺📺 status: ${purchaseDetails.status}');
       if (purchaseDetails.status == PurchaseStatus.pending) {
         print('📟 starting ...');
         add(StartPurchase(purchaseDetails));
@@ -38,16 +38,20 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
           add(ErrorPurchase(purchaseDetails.error!.message!));
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
-          await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-          print('❎ pago completado ...');
-
-          bool valid = true; //TODO implementar validación de compras.
-          if (valid) {
-            add(CompletePurchase(purchaseDetails));
+          if (purchaseDetails.status == PurchaseStatus.restored) {
+            print('💀💀💀 restoring purchase of ${purchaseDetails.productID}');
           } else {
-            add(PurchaseInvalid(
-                purchaseDetails)); // Y un evento PurchaseInvalid
+            await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+            print('❎ pago completado ...');
+
+            bool valid = true; //TODO implementar validación de compras.
+            if (valid) {
+              add(CompletePurchase(purchaseDetails));
+            } else {
+              add(PurchaseInvalid(
+                  purchaseDetails)); // Y un evento PurchaseInvalid
+            }
           }
         }
         if (purchaseDetails.pendingCompletePurchase) {
