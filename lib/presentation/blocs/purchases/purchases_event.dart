@@ -56,6 +56,15 @@ class CompletePurchase extends PurchaseEvent {
   List<Object> get props => [purchaseDetails];
 }
 
+class RestorePurchase extends PurchaseEvent {
+  final PurchaseDetails purchaseDetails;
+
+  const RestorePurchase(this.purchaseDetails);
+
+  @override
+  List<Object> get props => [purchaseDetails];
+}
+
 class ErrorPurchase extends PurchaseEvent {
   final String error;
 

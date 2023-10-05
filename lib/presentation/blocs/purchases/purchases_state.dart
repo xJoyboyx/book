@@ -21,6 +21,15 @@ class PurchaseSuccess extends PurchaseState {
   List<Object> get props => [purchase];
 }
 
+class RestoringPurchase extends PurchaseState {
+  final PurchaseDetails purchase;
+
+  const RestoringPurchase(this.purchase);
+
+  @override
+  List<Object> get props => [purchase];
+}
+
 class PurchaseFailure extends PurchaseState {
   final String error;
 

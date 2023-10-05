@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:book/data/models/transaction.dart';
+import 'package:book/data/services/transactions_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
@@ -20,7 +21,12 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
     on<ErrorPurchase>(_onErrorPurchase);
     on<PurchaseValid>(_onPurchaseValid);
     on<Initialized>(_onInitialized);
+    on<RestorePurchase>(_onRestorePurchase);
   }
+  void _onRestorePurchase(RestorePurchase event, Emitter<PurchaseState> emit) {
+    emit(RestoringPurchase(event.purchaseDetails));
+  }
+
   void _onInitialized(Initialized event, Emitter<PurchaseState> emit) {
     emit(PurchaseInitial());
   }
@@ -40,12 +46,14 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
             purchaseDetails.status == PurchaseStatus.restored) {
           if (purchaseDetails.status == PurchaseStatus.restored) {
             print('💀💀💀 restoring purchase of ${purchaseDetails.productID}');
+
+            add(RestorePurchase(purchaseDetails));
           } else {
             await InAppPurchase.instance.completePurchase(purchaseDetails);
 
             print('❎ pago completado ...');
 
-            bool valid = true; //TODO implementar validación de compras.
+            bool valid = true;
             if (valid) {
               add(CompletePurchase(purchaseDetails));
             } else {

@@ -19,6 +19,15 @@ class SaveTransaction extends MarketplaceEvent {
   List<Object?> get props => [transaction];
 }
 
+class RestoreTransaction extends MarketplaceEvent {
+  final Transaction transaction;
+
+  RestoreTransaction(this.transaction);
+
+  @override
+  List<Object?> get props => [transaction];
+}
+
 class StartTransaction extends MarketplaceEvent {
   final Transaction transaction;
 

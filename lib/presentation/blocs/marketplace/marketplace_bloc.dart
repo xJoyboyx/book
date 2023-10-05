@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:book/data/models/transaction.dart';
 import 'package:book/domain/usecases/transactions/transactions_usecase.dart';
+import 'package:book/presentation/blocs/purchases/purchases_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +24,16 @@ class MarketPlaceBloc extends Bloc<MarketplaceEvent, MarketPlaceState> {
     on<LoadPurchases>(_onLoadPurchases);
     on<SaveTransaction>(_onSaveTransaction);
     on<StartTransaction>(_onStartTransaction);
+    on<RestoreTransaction>(_onRestoreTransaction);
+  }
+
+  Future<void> _onRestoreTransaction(
+      RestoreTransaction event, Emitter<MarketPlaceState> emit) async {
+    String? user_id = await sharedPreferences.getString('userId');
+    Transaction transaction =
+        Transaction(userId: user_id, productId: event.transaction.productId);
+    await transactionsUseCase.restoreTransaction(transaction);
+    add(LoadPurchases());
   }
 
   Future<void> _onLoadPurchases(

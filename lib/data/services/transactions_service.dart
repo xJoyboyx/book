@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:book/data/datasources/endpoints.dart';
 import 'package:book/data/models/http_client.dart';
 import 'package:book/data/models/transaction.dart';
+import 'package:book/domain/entities/restore_purchase_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/Result.dart';
@@ -41,6 +42,25 @@ class TransactionsService {
       print(response.body);
       print(response.statusCode);
 
+      return Result.success(transactionResponse);
+    } catch (e) {
+      print('error on transaction post ${e}');
+      return Result.failure(e);
+    }
+  }
+
+  Future<Result<Transaction>> restorePurchase(Transaction transaction) async {
+    RestorePurchaseDTO restorePurchaseDTO = RestorePurchaseDTO(
+        userId: transaction.userId, productId: transaction.productId);
+    print('transaction body: ${restorePurchaseDTO.toRawJson()}');
+
+    try {
+      final response = await httpClient.post(
+          '${URL}/transactions/restore', restorePurchaseDTO.toJson());
+      final Transaction transactionResponse =
+          Transaction.fromRawJson(response.body);
+      print(response.body);
+      print(response.statusCode);
       return Result.success(transactionResponse);
     } catch (e) {
       print('error on transaction post ${e}');

@@ -26,7 +26,15 @@ class ThemeSelection extends StatelessWidget {
     final purchasesStates = context.watch<PurchaseBloc>().state;
     if (purchasesStates is PurchasePending ||
         marketPlaceStates is LoadingTransactions ||
-        purchasesStates is PurchaseInProgress) {
+        purchasesStates is PurchaseInProgress ||
+        purchasesStates is RestoringPurchase) {
+      if (purchasesStates is RestoringPurchase) {
+        Transaction t =
+            Transaction(productId: purchasesStates.purchase.productID);
+        context.read<MarketPlaceBloc>().add(RestoreTransaction(t));
+        context.read<PurchaseBloc>().add(Initialized());
+        context.read<ThemeBloc>().add(ThemeChanged(themeId: 0));
+      }
       return Container(
           height: .9.sh, child: Center(child: CircularProgressIndicator()));
     } else if (purchasesStates is PurchaseSuccess) {

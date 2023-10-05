@@ -17,4 +17,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
   Future<Result<Transaction>> postTransaction(Transaction transaction) async {
     return await transactionsService.postTransaction(transaction);
   }
+
+  @override
+  Future<Result<Transaction>> restoreTransaction(
+      Transaction transaction) async {
+    return await transactionsService.restorePurchase(transaction);
+  }
 }

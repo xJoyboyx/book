@@ -11,6 +11,11 @@ class TransactionsUseCase {
     return result.isSuccess;
   }
 
+  Future<bool> restoreTransaction(Transaction transaction) async {
+    Result result = await transactionRepository.restoreTransaction(transaction);
+    return result.isSuccess;
+  }
+
   Future<List<Transaction>> getTransactions(String userId) async {
     Result<List<Transaction>> result =
         await transactionRepository.getTransactionsByUserId(userId);
