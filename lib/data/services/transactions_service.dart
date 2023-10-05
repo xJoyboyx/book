@@ -55,7 +55,7 @@ class TransactionsService {
     print('transaction body: ${restorePurchaseDTO.toRawJson()}');
 
     try {
-      final response = await httpClient.post(
+      final response = await httpClient.patch(
           '${URL}/transactions/restore', restorePurchaseDTO.toJson());
       final Transaction transactionResponse =
           Transaction.fromRawJson(response.body);
@@ -63,7 +63,7 @@ class TransactionsService {
       print(response.statusCode);
       return Result.success(transactionResponse);
     } catch (e) {
-      print('error on transaction post ${e}');
+      print('error on transaction patch: ${e}');
       return Result.failure(e);
     }
   }
