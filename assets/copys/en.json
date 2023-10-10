@@ -19,10 +19,10 @@
       "select_language": "LANGUAGES"
     },
     "session": {
-      "welcome": "Bienvenid@",
-      "login_apple": "Entrar con Apple",
-      "login_google": "Entrar con Google",
-      "terms_and_conditions": "Términos y condiciones"
+      "welcome": "Welcome",
+      "login_apple": "Enter with Apple",
+      "login_google": "Enter with Google",
+      "terms_and_conditions": "Terms, conditions and privacy policy"
     }
   }
 }

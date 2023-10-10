@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final List<Language> languages = [
   Language(code: 'en', name: 'I speak english'),
   Language(code: 'es', name: 'Hablo español'),
-  Language(code: 'fr', name: 'Je parle français'),
   // ... puedes agregar más idiomas según lo necesites
 ];
 
