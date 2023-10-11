@@ -47,10 +47,16 @@ class UserRepositoryImpl implements UserRepository {
       );
 
       final String userId = credential.userIdentifier!;
-      final UserCredential userCredential = UserCredential(
-          external_user_id: userId, email: credential.email, type: type);
 
       if (credential.email != null) {
+        final UserCredential userCredential = UserCredential(
+            external_user_id: userId, email: credential.email, type: type);
+        Result<UserModel> result =
+            await userService.registerUser(userCredential);
+        return result;
+      } else {
+        final UserCredential userCredential =
+            UserCredential(external_user_id: userId, type: type);
         Result<UserModel> result =
             await userService.registerUser(userCredential);
         return result;
