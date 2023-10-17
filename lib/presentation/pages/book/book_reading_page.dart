@@ -1,7 +1,10 @@
 import 'package:book/data/models/book.dart';
+import 'package:book/presentation/blocs/theme/theme_bloc.dart';
 import 'package:book/presentation/pages/book/chapter_content_page.dart';
+import 'package:book/presentation/widgets/media-widgets/image_builder.dart';
 import 'package:book/themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -12,6 +15,10 @@ class BookReadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    final themeState = themeBloc.state;
+    final themeId = themeState.themeId + 1;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -36,6 +43,7 @@ class BookReadingPage extends StatelessWidget {
                 ),
               );
             },
+            themeId: themeId,
           );
         },
         separatorBuilder: (context, index) => SizedBox.shrink(),
@@ -62,30 +70,16 @@ class ChapterTitleWidget extends StatelessWidget {
 class ChapterImageWidget extends StatelessWidget {
   final String? imagePath;
   final double? number;
+  final int themeId;
 
-  ChapterImageWidget({super.key, this.imagePath, this.number});
+  ChapterImageWidget(
+      {super.key, this.imagePath, this.number, required this.themeId});
 
   @override
   Widget build(BuildContext context) {
-    if (number != null) {
-      if (number == 0.1) {
-        return Container(
-          color: AppThemes.dimensionsColorsTheme1[0],
-          height: 50,
-          width: 50,
-        );
-      } else {
-        return Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppThemes.dimensionsColorsTheme1[number!.toInt()],
-            ));
-      }
-    }
     if (imagePath != null) {
-      return Image.asset(imagePath!, width: 50);
+      return ImageBuilder(
+          imageName: imagePath!, themeId: themeId.toString(), width: 40.0);
     }
     return SizedBox.shrink(); // Retorna un widget vacío si no hay imagen
   }
@@ -94,8 +88,9 @@ class ChapterImageWidget extends StatelessWidget {
 class ChapterTile extends StatelessWidget {
   final Chapter chapter;
   final VoidCallback onTap;
-
-  ChapterTile({required this.chapter, required this.onTap});
+  final int themeId;
+  ChapterTile(
+      {required this.chapter, required this.onTap, required this.themeId});
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +101,7 @@ class ChapterTile extends StatelessWidget {
         trailing: ChapterImageWidget(
           imagePath: chapter.preMedia,
           number: chapter.number,
+          themeId: themeId,
         ),
         onTap: onTap,
       ),

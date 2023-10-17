@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "761481068514",
+    "project_id": "dimensions-spiralone",
+    "storage_bucket": "dimensions-spiralone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761481068514:android:68d32abd655c778d1cc3bb",
+        "android_client_info": {
+          "package_name": "com.spiraldimensions.spiralone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761481068514-sfd3lm7skh9qahr106m76bmn1pv31pi1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPwzZNWDCP_fLqNrHSjfeUMkDY2o0k3po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761481068514-sfd3lm7skh9qahr106m76bmn1pv31pi1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "761481068514-ad981dlss3e46mjvsqf93uh0hiv6tc9f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spiraldimensions.spiralone"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

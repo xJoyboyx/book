@@ -1,8 +1,11 @@
 import 'package:book/data/models/book.dart';
+import 'package:book/presentation/blocs/theme/theme_bloc.dart';
 import 'package:book/presentation/pages/book/book_reading_page.dart';
 import 'package:book/presentation/pages/settings/settings_page.dart';
+import 'package:book/presentation/widgets/media-widgets/image_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:book/themes/app_themes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BookHomePage extends StatelessWidget {
@@ -13,10 +16,10 @@ class BookHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final primaryColor = theme.colorScheme.primary;
     final backgroundColor = theme.colorScheme.background;
-    final accentColor = theme.colorScheme.onPrimary;
-    final textTheme = theme.textTheme;
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    final themeState = themeBloc.state;
+    final themeId = themeState.themeId + 1;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,12 +60,12 @@ class BookHomePage extends StatelessWidget {
                 child: Container(
                   color: backgroundColor,
                   child: Padding(
-                    padding: EdgeInsets.only(top: .1.sh),
-                    child: Image.asset(
-                      book.coverMedia!,
-                      width: .9.sw,
-                    ),
-                  ),
+                      padding: EdgeInsets.only(top: .1.sh),
+                      child: ImageBuilder(
+                        imageName: book.coverMedia!,
+                        themeId: themeId.toString(),
+                        width: .9.sw,
+                      )),
                 ),
               ),
               Flexible(

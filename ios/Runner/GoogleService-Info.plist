@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>761481068514-ad981dlss3e46mjvsqf93uh0hiv6tc9f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.761481068514-ad981dlss3e46mjvsqf93uh0hiv6tc9f</string>
+	<key>API_KEY</key>
+	<string>AIzaSyADu9f53pxCjBc4PcnO7Mr6b75fvR7UBQo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>761481068514</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.spiraldimensions.spiralone</string>
+	<key>PROJECT_ID</key>
+	<string>dimensions-spiralone</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dimensions-spiralone.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:761481068514:ios:b75b853f86100b0b1cc3bb</string>
+</dict>
+</plist>

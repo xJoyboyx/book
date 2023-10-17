@@ -1,7 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class AppThemes {
-  static const themeIds = ['original', 'pixeles'];
+  static const themeIds = ['original', 'theme2_pixels'];
 
   //#region THEME 1
   //#region THEME 1 COLORS
@@ -49,33 +51,43 @@ class AppThemes {
   );
   //#endregion
   //#region THEME 1 TEXT_STYLES
-  static const TextStyle headLineMedium1 =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Inter');
+  static const TextStyle headLineMedium1 = TextStyle(
+    fontSize: 20,
+    fontVariations: [FontVariation('wght', 700)],
+    fontFamily: 'Inter',
+    color: AppThemes.primaryColorTheme1,
+  );
   static const TextStyle displayLarge1 = TextStyle(
     fontSize: 32,
-    fontWeight: FontWeight.w200,
+    fontVariations: [FontVariation('wght', 200)],
+    color: Color.fromRGBO(186, 186, 186, 1.0),
     letterSpacing: 10.0,
     fontFamily: 'Inter',
   );
   static const TextStyle displayMedium1 = TextStyle(
       fontSize: 16,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 5.0,
+      fontVariations: [FontVariation('wght', 400)],
+      color: Color.fromRGBO(186, 186, 186, 1.0),
+      letterSpacing: 2.0,
       fontFamily: 'Inter');
   static const TextStyle titleLarge1 = TextStyle(
       fontSize: 32,
-      fontWeight: FontWeight.w900,
+      fontVariations: [FontVariation('wght', 900)],
       color: primaryColorTheme1,
       fontFamily: 'Inter');
   static const TextStyle titleLMedium1 = TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w800,
+      fontSize: 24,
+      fontVariations: [FontVariation('wght', 800)],
       color: primaryColorTheme1,
       fontFamily: 'Inter');
-  static const TextStyle bodyMedium1 =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w400, fontFamily: 'Inter');
-  static const TextStyle bodyLarge1 =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w400, fontFamily: 'Inter');
+  static const TextStyle bodyMedium1 = TextStyle(
+      fontSize: 20,
+      fontVariations: [FontVariation('wght', 400)],
+      fontFamily: 'Inter');
+  static const TextStyle bodyLarge1 = TextStyle(
+      fontSize: 20,
+      fontVariations: [FontVariation('wght', 800)],
+      fontFamily: 'Inter');
 
   //#endregion
   static final ThemeData theme1 = ThemeData(
@@ -86,8 +98,8 @@ class AppThemes {
 
   //#region THEME 2
   //#region THEME 2 COLORS
-  static const primaryColorTheme2 = Color.fromRGBO(214, 207, 190, 1);
-  static const backgroundColorTheme2 = Color.fromRGBO(32, 30, 30, 1);
+  static const primaryColorTheme2 = Color.fromRGBO(216, 197, 144, 1.0);
+  static const backgroundColorTheme2 = Color.fromRGBO(49, 46, 46, 1.0);
   static const accentColorTheme2 = Color.fromRGBO(149, 149, 149, 1);
   static const dimensionsColorsTheme2 = [
     Color.fromRGBO(214, 207, 190, 1),
@@ -107,72 +119,82 @@ class AppThemes {
   //region THEME 1 COLOR SCHEME
   static const ColorScheme theme2ColorScheme = ColorScheme(
       brightness: Brightness.light,
-      primary: Colors.white,
+      primary: primaryColorTheme2,
       onPrimary: Colors.black54,
       secondary: Color.fromRGBO(214, 214, 214, 100),
       onSecondary: Colors.black87,
       error: Colors.redAccent,
       onError: Colors.black87,
-      background: backgroundColorTheme1,
+      background: backgroundColorTheme2,
       onBackground: Color.fromRGBO(217, 217, 217, 1),
       surface: Color.fromRGBO(149, 149, 149, 100),
       onSurface: Color.fromRGBO(190, 190, 190, 100));
   //#endregion
   //#region THEME 1 TEXT THEME
   static const TextTheme textTheme2 = TextTheme(
-    titleLarge: titleLarge1,
-    titleMedium: titleLMedium1,
-    displayLarge: displayLarge1,
-    displayMedium: displayMedium1,
-    bodyLarge: bodyLarge1,
-    bodyMedium: bodyMedium1,
-    headlineMedium: headLineMedium1,
+    titleLarge: titleLarge2,
+    titleMedium: titleLMedium2,
+    displayLarge: displayLarge2,
+    displayMedium: displayMedium2,
+    bodyLarge: bodyLarge2,
+    bodyMedium: bodyMedium2,
+    headlineMedium: headLineMedium2,
   );
   //#endregion
   //#region THEME 1 TEXT_STYLES
-  static const TextStyle headLineMedium2 =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w800);
+  static const TextStyle headLineMedium2 = TextStyle(
+    fontSize: 24,
+    fontVariations: [FontVariation('wght', 800)],
+    fontFamily: 'Handjet',
+    color: primaryColorTheme2,
+  );
   static const TextStyle displayLarge2 = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w200,
-    letterSpacing: 10.0,
-  );
+      fontSize: 42,
+      fontVariations: [FontVariation('wght', 800)],
+      letterSpacing: 10.0,
+      color: primaryColorTheme2,
+      fontFamily: 'Handjet');
   static const TextStyle displayMedium2 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    letterSpacing: 5.0,
-  );
+      fontSize: 18,
+      fontVariations: [FontVariation('wght', 600)],
+      letterSpacing: 5.0,
+      color: primaryColorTheme2,
+      fontFamily: 'Handjet');
   static const TextStyle titleLarge2 = TextStyle(
-    fontSize: 26,
-    fontWeight: FontWeight.w800,
-    color: primaryColorTheme1,
-  );
+      fontSize: 32,
+      fontVariations: [FontVariation('wght', 800)],
+      color: primaryColorTheme2,
+      letterSpacing: 1.0,
+      fontFamily: 'Handjet');
   static const TextStyle titleLMedium2 = TextStyle(
-    fontSize: 22,
-    fontWeight: FontWeight.w800,
-    color: primaryColorTheme1,
-  );
+      fontSize: 22,
+      fontVariations: [FontVariation('wght', 800)],
+      letterSpacing: 2.0,
+      color: primaryColorTheme2,
+      fontFamily: 'Handjet');
   static const TextStyle bodyMedium2 = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-  );
+      fontSize: 24,
+      fontVariations: [FontVariation('wght', 400)],
+      color: primaryColorTheme2,
+      fontFamily: 'Handjet');
   static const TextStyle bodyLarge2 = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-  );
+      fontFamily: 'Handjet',
+      fontSize: 24,
+      fontVariations: [FontVariation('wght', 400)],
+      color: primaryColorTheme2);
 
   //#endregion
   static final ThemeData theme2 = ThemeData(
-    textTheme: textTheme1,
-    colorScheme: theme1ColorScheme,
+    textTheme: textTheme2,
+    colorScheme: theme2ColorScheme,
   );
 //#endregion
 
   static ThemeData getThemeById(int id) {
     switch (id) {
-      case 1:
+      case 0:
         return theme1;
-      case 2:
+      case 1:
         return theme2;
       default:
         return theme1; // Retorna el tema por defecto si el id no coincide

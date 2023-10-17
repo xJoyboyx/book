@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final List<Language> languages = [
   Language(code: 'en', name: 'I speak english'),
   Language(code: 'es', name: 'Hablo español'),
-  Language(code: 'fr', name: 'Je parle français'),
   // ... puedes agregar más idiomas según lo necesites
 ];
 
@@ -22,7 +21,7 @@ class LanguageSelectionPage extends StatelessWidget {
       body: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, state) {
           return Padding(
-            padding: EdgeInsets.only(top: .2.sh),
+            padding: EdgeInsets.only(top: .1.sh),
             child: ListView.builder(
               itemCount: languages
                   .length, // Asumiendo que 'languages' es una lista de todos los idiomas disponibles

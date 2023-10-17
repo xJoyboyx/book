@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:book/data/datasources/translation_data_source.dart';
 import 'package:book/data/models/translations.dart';
 import 'package:book/data/repositories/language/language_repository.dart';
 import 'package:book/domain/entities/language.dart';
@@ -28,7 +29,9 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
       AppStarted event, Emitter<LanguageState> emit) async {
     final language = await getSelectedLanguage();
     if (language != null) {
-      final translations = await loadTranslations(language.code);
+      final translationDataSource = TranslationDataSource();
+      final translations =
+          await translationDataSource.loadTranslations(language.code);
       emit(LanguageSelectedState(
           language: language, translations: translations));
     } else {
@@ -39,8 +42,9 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   Future<void> _onSelectLanguageEvent(
       SelectLanguageEvent event, Emitter<LanguageState> emit) async {
     await setSelectedLanguage(event.language);
+    final translationDataSource = TranslationDataSource();
     final Translations translations =
-        await loadTranslations(event.language.code);
+        await translationDataSource.loadTranslations(event.language.code);
     emit(LanguageSelectedState(
         language: event.language, translations: translations));
   }

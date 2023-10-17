@@ -5,10 +5,30 @@
       "select_language": "Seleccionar idioma",
       "select_themes": "Selecciona un tema",
       "theme1": "Original",
-      "theme2": "Pixeles"
+      "theme2": "Pixeles",
+      "theme1_description": "El estilo original del libro, totalmente grátis.",
+      "theme2_description": "Estilo Pixel art, creado por el autor. Te permite cambiar el estilo total del libro, cáda capítulo con una nueva portada al estilo pixel así como la tipografía.",
+      "email-dt": "Ingresa tu correo electrónico para asociar tus compras",
+      "email-ph": "Correo electrónico",
+      "email-save": "Guardar",
+      "logout": "Cerrar sesión",
+      "restore-purchases": "Restaurar compras",
+      "delete-account": "Eliminar cuenta",
+      "confirmation-delete-title": "¿Estas seguro que quieres eliminar tu cuenta?",
+      "confirmation-delete-description": "Se borraran todos tus datos incluyendo asociaciones a tus compras.",
+      "confirmation-delete-btn": "Confirmar",
+      "cancel-delete-btn": "Cancelar"
+
+
     },
     "language_selection": {
       "select_language": "IDIOMAS"
+    },
+    "session": {
+      "welcome": "Bienvenid@",
+      "login_apple": "Entrar con Apple",
+      "login_google": "Entrar con Google",
+      "terms_and_conditions": "Términos y condiciones"
     }
   }
 }

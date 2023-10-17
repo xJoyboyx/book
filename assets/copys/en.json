@@ -5,10 +5,28 @@
       "select_language": "Language selection",
       "select_themes": "Theme selection",
       "theme1": "Original",
-      "theme2": "Pixel's"
+      "theme2": "Pixel's",
+      "theme1_description": "This is the original art sytle of the book.",
+      "theme2_description": "Pixel art style of the book. Each chapter have a particular art style and also typography is changed.",
+      "email-dt": "Add your e-mail to associate with your purchases",
+      "email-ph": "E-mail",
+      "email-save": "Save",
+      "logout": "Log-out",
+      "restore-purchases": "Restore purhcases",
+      "delete-account": "Delete account",
+      "confirmation-delete-title": "Are you shure you want to delete your account?",
+      "confirmation-delete-description": "All your data including purchases will be lost",
+      "confirmation-delete-btn": "Confirm",
+      "cancel-delete-btn": "Cancel"
     },
     "language_selection": {
       "select_language": "LANGUAGES"
+    },
+    "session": {
+      "welcome": "Welcome",
+      "login_apple": "Enter with Apple",
+      "login_google": "Enter with Google",
+      "terms_and_conditions": "Terms, conditions and privacy policy"
     }
   }
 }

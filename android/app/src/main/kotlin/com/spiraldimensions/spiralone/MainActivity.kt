@@ -1,4 +1,4 @@
-package com.example.book
+package com.spiraldimensions.spiralone
 
 import io.flutter.embedding.android.FlutterActivity
 
