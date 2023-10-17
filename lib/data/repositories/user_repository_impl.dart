@@ -81,4 +81,11 @@ class UserRepositoryImpl implements UserRepository {
     }
     return Result.failure('AUTO_SIGN_ERROR');
   }
+
+  @override
+  Future<Result> deleteAccount() async {
+    final userId = sharedPreferences.getString('userId');
+    Result response = await userService.deleteUser(userId!);
+    return response;
+  }
 }

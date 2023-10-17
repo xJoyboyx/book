@@ -17,4 +17,6 @@ class Authenticated extends AuthState {
   List<Object> get props => [user];
 }
 
+class Deleted extends AuthState {}
+
 class Unauthenticated extends AuthState {}

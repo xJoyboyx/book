@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInWithGoogle>(_onSignInWithGoogle);
     on<SignInWithApple>(_onSignInWithApple);
     on<SignOut>(_onSignOut);
+    on<DeleteAcount>(_onDeleteAccount);
   }
 
   Future<void> _onAutoLogin(AutoLogin event, Emitter<AuthState> emit) async {
@@ -41,5 +42,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SignInWithApple event, Emitter<AuthState> emit) async {
     final UserModel? user = await signInUseCase.signInWithApple();
     emit(user != null ? Authenticated(user) : Unauthenticated());
+  }
+
+  Future<void> _onDeleteAccount(
+      DeleteAcount event, Emitter<AuthState> emit) async {
+    bool deleted = await signInUseCase.deleteUserAccount();
+    if (deleted) {
+      add(SignOut());
+    }
+    emit(Unauthenticated());
   }
 }

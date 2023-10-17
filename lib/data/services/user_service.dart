@@ -39,4 +39,14 @@ class UserService {
       return Result.failure(e);
     }
   }
+
+  Future<Result<UserModel>> deleteUser(String userId) async {
+    try {
+      final response = await httpClient.get('${URL}/users/$userId');
+      final UserModel user = UserModel.fromJson(jsonDecode(response.body));
+      return Result.success(user);
+    } catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

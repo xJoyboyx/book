@@ -12,7 +12,13 @@
       "email-ph": "Correo electrónico",
       "email-save": "Guardar",
       "logout": "Cerrar sesión",
-      "restore-purchases": "Restaurar compras"
+      "restore-purchases": "Restaurar compras",
+      "delete-account": "Eliminar cuenta",
+      "confirmation-delete-title": "¿Estas seguro que quieres eliminar tu cuenta?",
+      "confirmation-delete-description": "Se borraran todos tus datos incluyendo asociaciones a tus compras.",
+      "confirmation-delete-btn": "Confirmar",
+      "cancel-delete-btn": "Cancelar"
+
 
     },
     "language_selection": {

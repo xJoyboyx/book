@@ -12,8 +12,12 @@
       "email-ph": "E-mail",
       "email-save": "Save",
       "logout": "Log-out",
-      "restore-purchases": "Restore purhcases"
-
+      "restore-purchases": "Restore purhcases",
+      "delete-account": "Delete account",
+      "confirmation-delete-title": "Are you shure you want to delete your account?",
+      "confirmation-delete-description": "All your data including purchases will be lost",
+      "confirmation-delete-btn": "Confirm",
+      "cancel-delete-btn": "Cancel"
     },
     "language_selection": {
       "select_language": "LANGUAGES"

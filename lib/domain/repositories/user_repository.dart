@@ -5,4 +5,5 @@ abstract class UserRepository {
   Future<Result<UserModel>> signInWithGoogle();
   Future<Result<UserModel>> signInWithApple();
   Future<Result<UserModel>> autoLogin();
+  Future<Result> deleteAccount();
 }

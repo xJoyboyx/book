@@ -35,4 +35,9 @@ class SignInUseCase {
       return null;
     }
   }
+
+  Future<bool> deleteUserAccount() async {
+    var response = await userRepository.deleteAccount();
+    return response.isSuccess;
+  }
 }

@@ -45,4 +45,15 @@ class HttpClientImpl implements HttpClient {
       throw Exception('Failed to get data');
     }
   }
+
+  @override
+  Future<http.Response> delete(String url) async {
+    final response = await http.delete(Uri.parse(url));
+    print(jsonDecode(response.body));
+    if (response.statusCode == 204) {
+      return response;
+    } else {
+      throw Exception('Failed to delete data');
+    }
+  }
 }
