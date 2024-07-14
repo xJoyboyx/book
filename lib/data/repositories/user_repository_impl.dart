@@ -32,6 +32,7 @@ class UserRepositoryImpl implements UserRepository {
       Result<UserModel> result = await userService.registerUser(userCredential);
       return result;
     }
+
     return Result.failure('GOOGLE_SIGN_IN_ERROR');
   }
 

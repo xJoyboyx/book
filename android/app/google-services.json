@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "761481068514-de548nh7d39cih5o86l2erf7ci7jo5n4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spiraldimensions.spiralone",
+            "certificate_hash": "94b14a0fcf51a00e6a9842da215a6747638be67e"
+          }
+        },
+        {
+          "client_id": "761481068514-mvg77f2lt69ajssj4q4cjp53jga79td4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spiraldimensions.spiralone",
+            "certificate_hash": "efc303da8e91191cb1152d7a12fb5eb4c40ac59c"
+          }
+        },
+        {
           "client_id": "761481068514-sfd3lm7skh9qahr106m76bmn1pv31pi1.apps.googleusercontent.com",
           "client_type": 3
         }
